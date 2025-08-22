@@ -1,0 +1,97 @@
+{
+  "product": {
+    "name": "Interactive Visualisation of Spatial Weather Data",
+    "type": "Web Platform",
+    "purpose": "Transform meteorological datasets into interactive, intuitive graphics for decision-making and education.",
+    "users": ["Students", "Educators", "Farmers", "City Planners", "Researchers", "General Public"]
+  },
+
+  "requirements": {
+    "functional": [
+      {"id": "R-FR-01", "description": "Display weather data via maps, charts, and graphs"},
+      {"id": "R-FR-02", "description": "Ingest BOM & Meteostat APIs for real-time and historical data"},
+      {"id": "R-FR-03", "description": "Enable layer selection for variables (temperature, wind speed, humidity)"},
+      {"id": "R-FR-04", "description": "Allow feedback submission via UI"},
+      {"id": "R-FR-05", "description": "Support CSV/XLS dataset upload and integration"},
+      {"id": "R-FR-06", "description": "Provide filtering and region-to-region comparison"},
+      {"id": "R-FR-07", "description": "Implement time slider for historical exploration"},
+      {"id": "R-FR-08", "description": "Export visualisations in PNG, JPG, CSV"}
+    ],
+    "nonFunctional": [
+      {"id": "R-NFR-01", "description": "WCAG 2.1 AA accessibility compliance"},
+      {"id": "R-NFR-02", "description": "Render datasets (<1000 records) in under 2 seconds"},
+      {"id": "R-NFR-03", "description": "Cross-browser and OS compatibility"},
+      {"id": "R-NFR-04", "description": "Secure HTTPS + 2FA authentication"},
+      {"id": "R-NFR-05", "description": "Ease of use: tasks completable in <5 minutes"}
+    ]
+  },
+
+  "architecture": {
+    "frontend": ["React", "Leaflet.js", "Chart.js", "D3.js"],
+    "backend": ["FastAPI (Python)", "Redis Cache"],
+    "database": ["PostgreSQL", "PostGIS"],
+    "deployment": ["Docker", "AWS ECS", "GitHub Actions"],
+    "dataSources": ["Bureau of Meteorology", "Meteostat API", "User CSV Uploads"]
+  },
+
+  "dataPipeline": [
+    "Ingestion: Fetch from APIs or user uploads",
+    "Validation: Remove nulls, enforce ranges, outlier removal (Z-score)",
+    "Transformation: Standardise units (°C, km/h), UTC timestamps, geospatial conversion",
+    "Storage: PostgreSQL tables (stations, observations)",
+    "Access: Serve via FastAPI in JSON/GeoJSON, Redis cache for frequent queries",
+    "Visualisation: Rendered on frontend using Leaflet + Chart.js/D3.js"
+  ],
+
+  "acceptanceCriteria": {
+    "functional": [
+      "Users can view, filter, and compare weather data layers",
+      "Timeline slider correctly shows historical data",
+      "Exports available in PNG, CSV"
+    ],
+    "usability": [
+      "Non-technical users complete tasks <5 min",
+      "UI responsive across devices"
+    ],
+    "technical": [
+      "Stable operation on at least 3 browsers",
+      "Clean GitHub repo with documentation"
+    ],
+    "testing": [
+      "90% acceptance tests pass",
+      "3-5 external users complete usability checklist"
+    ]
+  },
+
+  "scope": {
+    "inScope": [
+      "Interactive dashboard (maps + charts)",
+      "Real-time and historical weather ingestion",
+      "CSV upload and visualisation",
+      "Export (PNG, CSV)",
+      "Authentication with 2FA"
+    ],
+    "outOfScope": [
+      "Native mobile app",
+      "Advanced admin analytics",
+      "Multilingual support",
+      "Offline usage"
+    ]
+  },
+
+  "roadmap": [
+    {"sprint": 1, "weeks": "1-2", "focus": "Planning & Design", "deliverables": ["Scope doc", "Wireframes"]},
+    {"sprint": 2, "weeks": "3-5", "focus": "Core Data & Mapping", "deliverables": ["Working map", "API integration"]},
+    {"sprint": 3, "weeks": "6-8", "focus": "UI & Uploads", "deliverables": ["Interactive UI prototype"]},
+    {"sprint": 4, "weeks": "9-10", "focus": "Testing & Refinement", "deliverables": ["Usability report", "Bug log"]},
+    {"sprint": 5, "weeks": "11-12", "focus": "QA & Documentation", "deliverables": ["Final prototype", "Docs"]},
+    {"sprint": 6, "weeks": "13", "focus": "Submission", "deliverables": ["Deployment-ready version"]}
+  ],
+
+  "risks": [
+    {"risk": "API downtime", "likelihood": "Medium", "impact": "High", "mitigation": "Implement caching and fallback datasets"},
+    {"risk": "Data inconsistency", "likelihood": "Medium", "impact": "Medium", "mitigation": "Strict validation + cleaning"},
+    {"risk": "Scope creep", "likelihood": "High", "impact": "Medium", "mitigation": "Sprint-based change control"},
+    {"risk": "Team availability", "likelihood": "Medium", "impact": "High", "mitigation": "Cross-training + responsibility matrix"}
+  ]
+}
