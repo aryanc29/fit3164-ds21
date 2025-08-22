@@ -5,15 +5,15 @@ services:
     image: postgis/postgis:15-3.3
     container_name: weather_postgres
     environment:
-      POSTGRES_DB: weather_db
-      POSTGRES_USER: weather_user
-      POSTGRES_PASSWORD: weather_pass
+      POSTGRES_DB: weatherdb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
     ports:
       - "5433:5432"  # Using 5433 to avoid conflicts
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U weather_user -d weather_db"]
+      test: ["CMD-SHELL", "pg_isready -U postgres -d weatherdb"]
       interval: 30s
       timeout: 10s
       retries: 3

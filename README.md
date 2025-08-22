@@ -56,11 +56,35 @@ A minimal FastAPI backend for the Interactive Visualisation of Spatial Weather D
 
 ```
 ├── main.py              # FastAPI application entry point
+├── database.py          # Database configuration and connection
+├── models.py            # SQLAlchemy models with PostGIS support
+├── init_db.py          # Database initialization script
+├── test_spatial.py     # PostGIS spatial functionality tests
 ├── requirements.txt     # Python dependencies
-├── docker-compose.yml   # Database services
+├── docker-compose.yml   # Database services (PostgreSQL + PostGIS + Redis)
 ├── .env.example        # Environment configuration template (for reference only)
 └── README.md           # This file
 ```
+
+## Database Features
+
+- ✅ **PostgreSQL 15** with **PostGIS 3.3** for spatial data
+- ✅ **Weather stations** with geographic coordinates  
+- ✅ **Weather data** time-series storage
+- ✅ **Spatial regions** for area-based analysis
+- ✅ **User locations** with customizable alerts
+- ✅ **Geographic queries** (distance, buffers, intersections)
+- ✅ **Multiple coordinate systems** (8500+ SRID support)
+
+## Spatial Capabilities
+
+The system can perform advanced spatial operations:
+- 📍 Point-based weather station locations
+- 📐 Distance calculations between locations  
+- 🎯 Buffer zones around points/regions
+- 🗺️ Coordinate system transformations
+- 🔍 Spatial intersection queries
+- 📊 Area-based weather analysis
 
 ## Next Steps
 

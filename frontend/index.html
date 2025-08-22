@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Data Visualization - Frontend Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .status-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .status-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .status-icon {
+            font-size: 24px;
+            margin-right: 10px;
+        }
+        
+        .status-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+        
+        .card:hover {
+            transform: translateY(-2px);
+        }
+        
+        .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .card-icon {
+            font-size: 28px;
+            margin-right: 12px;
+        }
+        
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+        
+        .loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            color: #666;
+        }
+        
+        .loading::before {
+            content: '';
+            width: 20px;
+            height: 20px;
+            border: 2px solid #f3f3f3;
+            border-radius: 50%;
+            border-top-color: #667eea;
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 10px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .error {
+            color: #e74c3c;
+            background: #ffebee;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #e74c3c;
+        }
+        
+        .success {
+            color: #27ae60;
+            background: #e8f5e8;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #27ae60;
+        }
+        
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding: 8px 0;
+        }
+        
+        .info-row:not(:last-child) {
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .info-label {
+            font-weight: 500;
+            color: #666;
+        }
+        
+        .info-value {
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .station-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .station-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            margin: 8px 0;
+            background: #f8f9fa;
+            border-radius: 8px;
+            transition: background 0.2s;
+        }
+        
+        .station-item:hover {
+            background: #e9ecef;
+        }
+        
+        .station-name {
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .station-details {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .weather-item {
+            background: #f8f9fa;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .weather-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .weather-station {
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .weather-time {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .weather-data {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 10px;
+        }
+        
+        .weather-metric {
+            text-align: center;
+        }
+        
+        .weather-metric-value {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #667eea;
+        }
+        
+        .weather-metric-label {
+            font-size: 0.8rem;
+            color: #666;
+            text-transform: uppercase;
+        }
+        
+        .refresh-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: background 0.2s;
+            margin: 10px 0;
+        }
+        
+        .refresh-btn:hover {
+            background: #5a6fd8;
+        }
+        
+        .refresh-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌤️ Weather Data Visualization</h1>
+            <p>Interactive demonstration of the backend database and API</p>
+        </div>
+
+        <!-- Connection Status -->
+        <div class="status-card">
+            <div class="status-header">
+                <span class="status-icon">🔗</span>
+                <h2 class="status-title">Backend Connection Status</h2>
+                <button class="refresh-btn" onclick="checkConnection()">Refresh</button>
+            </div>
+            <div id="connection-status">
+                <div class="loading">Checking connection...</div>
+            </div>
+        </div>
+
+        <div class="grid">
+            <!-- Database Statistics -->
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-icon">📊</span>
+                    <h3 class="card-title">Database Statistics</h3>
+                </div>
+                <div id="statistics-content">
+                    <div class="loading">Loading statistics...</div>
+                </div>
+            </div>
+
+            <!-- Weather Stations -->
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-icon">🏢</span>
+                    <h3 class="card-title">Weather Stations</h3>
+                </div>
+                <div id="stations-content">
+                    <div class="loading">Loading stations...</div>
+                </div>
+            </div>
+
+            <!-- Recent Weather Data -->
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-icon">🌡️</span>
+                    <h3 class="card-title">Recent Weather Data</h3>
+                </div>
+                <div id="weather-content">
+                    <div class="loading">Loading weather data...</div>
+                </div>
+            </div>
+
+            <!-- Spatial Query Demo -->
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-icon">📍</span>
+                    <h3 class="card-title">Spatial Query Demo</h3>
+                </div>
+                <div id="spatial-content">
+                    <div class="loading">Loading spatial data...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:8000';
+        
+        // Connection check
+        async function checkConnection() {
+            const statusDiv = document.getElementById('connection-status');
+            statusDiv.innerHTML = '<div class="loading">Checking connection...</div>';
+            
+            try {
+                const response = await fetch(`${API_BASE}/health`);
+                const data = await response.json();
+                
+                if (response.ok) {
+                    statusDiv.innerHTML = `
+                        <div class="success">
+                            <strong>✅ Connected Successfully!</strong><br>
+                            Service: ${data.service}<br>
+                            Database Status: ${data.database_status}<br>
+                            API Key Status: ${data.api_key_status}
+                        </div>
+                    `;
+                } else {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+            } catch (error) {
+                statusDiv.innerHTML = `
+                    <div class="error">
+                        <strong>❌ Connection Failed</strong><br>
+                        Error: ${error.message}<br>
+                        Make sure the backend server is running on port 8000
+                    </div>
+                `;
+            }
+        }
+        
+        // Load statistics
+        async function loadStatistics() {
+            const contentDiv = document.getElementById('statistics-content');
+            
+            try {
+                const response = await fetch(`${API_BASE}/api/v1/statistics`);
+                const data = await response.json();
+                
+                if (response.ok) {
+                    contentDiv.innerHTML = `
+                        <div class="info-row">
+                            <span class="info-label">Weather Stations</span>
+                            <span class="info-value">${data.stations}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Total Records</span>
+                            <span class="info-value">${data.total_records.toLocaleString()}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Min Temperature</span>
+                            <span class="info-value">${data.temperature.min}°C</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Max Temperature</span>
+                            <span class="info-value">${data.temperature.max}°C</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Avg Temperature</span>
+                            <span class="info-value">${data.temperature.average}°C</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Date Range</span>
+                            <span class="info-value">${new Date(data.date_range.from).toLocaleDateString()} - ${new Date(data.date_range.to).toLocaleDateString()}</span>
+                        </div>
+                    `;
+                } else {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+            } catch (error) {
+                contentDiv.innerHTML = `<div class="error">Failed to load statistics: ${error.message}</div>`;
+            }
+        }
+        
+        // Load weather stations
+        async function loadStations() {
+            const contentDiv = document.getElementById('stations-content');
+            
+            try {
+                const response = await fetch(`${API_BASE}/api/v1/stations`);
+                const data = await response.json();
+                
+                if (response.ok && Array.isArray(data)) {
+                    contentDiv.innerHTML = `
+                        <div class="station-list">
+                            ${data.map(station => `
+                                <div class="station-item">
+                                    <div>
+                                        <div class="station-name">${station.name}</div>
+                                        <div class="station-details">${station.code} • ${station.state}</div>
+                                    </div>
+                                    <div class="station-details">
+                                        ${station.latitude.toFixed(3)}, ${station.longitude.toFixed(3)}
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    `;
+                } else {
+                    throw new Error(`Invalid response format`);
+                }
+            } catch (error) {
+                contentDiv.innerHTML = `<div class="error">Failed to load stations: ${error.message}</div>`;
+            }
+        }
+        
+        // Load recent weather data
+        async function loadWeatherData() {
+            const contentDiv = document.getElementById('weather-content');
+            
+            try {
+                const response = await fetch(`${API_BASE}/api/v1/weather/recent?limit=5`);
+                const data = await response.json();
+                
+                if (response.ok && Array.isArray(data)) {
+                    contentDiv.innerHTML = data.map(weather => `
+                        <div class="weather-item">
+                            <div class="weather-header">
+                                <span class="weather-station">${weather.station_name}</span>
+                                <span class="weather-time">${new Date(weather.timestamp).toLocaleString()}</span>
+                            </div>
+                            <div class="weather-data">
+                                <div class="weather-metric">
+                                    <div class="weather-metric-value">${weather.temperature}°C</div>
+                                    <div class="weather-metric-label">Temperature</div>
+                                </div>
+                                <div class="weather-metric">
+                                    <div class="weather-metric-value">${weather.humidity}%</div>
+                                    <div class="weather-metric-label">Humidity</div>
+                                </div>
+                                <div class="weather-metric">
+                                    <div class="weather-metric-value">${weather.pressure} hPa</div>
+                                    <div class="weather-metric-label">Pressure</div>
+                                </div>
+                                <div class="weather-metric">
+                                    <div class="weather-metric-value">${weather.wind_speed} km/h</div>
+                                    <div class="weather-metric-label">Wind</div>
+                                </div>
+                            </div>
+                        </div>
+                    `).join('');
+                } else {
+                    throw new Error(`Invalid response format`);
+                }
+            } catch (error) {
+                contentDiv.innerHTML = `<div class="error">Failed to load weather data: ${error.message}</div>`;
+            }
+        }
+        
+        // Load spatial query demo (stations near Melbourne)
+        async function loadSpatialDemo() {
+            const contentDiv = document.getElementById('spatial-content');
+            
+            try {
+                // Melbourne coordinates: -37.8136, 144.9631
+                const response = await fetch(`${API_BASE}/api/v1/weather/nearby?lat=-37.8136&lng=144.9631&radius_km=100`);
+                const data = await response.json();
+                
+                if (response.ok) {
+                    contentDiv.innerHTML = `
+                        <div class="info-row">
+                            <span class="info-label">Search Location</span>
+                            <span class="info-value">Melbourne, VIC</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Search Radius</span>
+                            <span class="info-value">${data.radius_km} km</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Stations Found</span>
+                            <span class="info-value">${data.stations_found}</span>
+                        </div>
+                        <div class="station-list" style="max-height: 200px;">
+                            ${data.stations.map(station => `
+                                <div class="station-item">
+                                    <div>
+                                        <div class="station-name">${station.name}</div>
+                                        <div class="station-details">${station.code} • ${station.state}</div>
+                                    </div>
+                                    <div class="station-details">
+                                        ${station.distance_km} km away
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    `;
+                } else {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+            } catch (error) {
+                contentDiv.innerHTML = `<div class="error">Failed to load spatial data: ${error.message}</div>`;
+            }
+        }
+        
+        // Initialize the page
+        async function init() {
+            await checkConnection();
+            await Promise.all([
+                loadStatistics(),
+                loadStations(),
+                loadWeatherData(),
+                loadSpatialDemo()
+            ]);
+        }
+        
+        // Start loading when page is ready
+        document.addEventListener('DOMContentLoaded', init);
+        
+        // Auto-refresh every 30 seconds
+        setInterval(() => {
+            loadWeatherData();
+            loadStatistics();
+        }, 30000);
+    </script>
+</body>
+</html>

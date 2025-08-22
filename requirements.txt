@@ -5,6 +5,7 @@ uvicorn[standard]==0.24.0
 # Database
 sqlalchemy==2.0.23
 psycopg2-binary==2.9.9
+geoalchemy2==0.14.2
 
 # Environment & Config
 python-dotenv==1.0.0
@@ -16,3 +17,7 @@ httpx==0.25.2
 
 # Monitoring & Logging
 structlog==23.2.0
+
+# Spatial data processing
+shapely==2.0.2
+geojson==3.1.0
