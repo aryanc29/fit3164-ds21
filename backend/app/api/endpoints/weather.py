@@ -77,7 +77,7 @@ async def get_weather_station(
 
 @router.get("/observations", response_model=List[WeatherObservationResponse])
 async def get_weather_observations(
-    station_ids: Optional[List[str]] = Query(None, description="Station IDs to filter by"),
+    station_ids: Optional[List[str]] = Query(None, description="Station IDs to filter by"), # 
     start_date: Optional[datetime] = Query(None, description="Start date for observations"),
     end_date: Optional[datetime] = Query(None, description="End date for observations"),
     variables: Optional[List[str]] = Query(None, description="Weather variables to include"),

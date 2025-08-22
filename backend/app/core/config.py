@@ -23,6 +23,20 @@ class Settings(BaseSettings):
     METEOSTAT_API_KEY: Optional[str] = None
     METEOSTAT_API_BASE_URL: str = "https://api.meteostat.net/v1"
     
+    # Google APIs (billing enabled)
+    GOOGLE_API_KEY: Optional[str] = None
+    GOOGLE_MAPS_API_KEY: Optional[str] = None
+    GOOGLE_WEATHER_API_BASE_URL: str = "https://api.openweathermap.org/data/2.5"
+    
+    # Free APIs (backup/development)
+    NOMINATIM_BASE_URL: str = "https://nominatim.openstreetmap.org"
+    DEMO_WEATHER_URL: str = "https://wttr.in"
+    USER_AGENT: str = "WeatherDataVisualization/1.0 (fit3164-ds21)"
+    
+    # OpenWeatherMap (separate free API)
+    OPENWEATHER_API_KEY: Optional[str] = None
+    OPENWEATHER_BASE_URL: str = "https://api.openweathermap.org/data/2.5"
+    
     # JWT Authentication
     JWT_SECRET_KEY: str = "jwt-secret-key-change-in-production"
     JWT_ALGORITHM: str = "HS256"
