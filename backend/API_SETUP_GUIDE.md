@@ -36,8 +36,7 @@ In Google Cloud Console → APIs & Services → Library, enable:
 ### Step 4: Update Your .env File
 ```bash
 # Google APIs (requires billing)
-GOOGLE_API_KEY=AIzaSyD5rI7HQCJK0zNhz8eFdn5Un87-zeLEWL4
-GOOGLE_MAPS_API_KEY=AIzaSyD5rI7HQCJK0zNhz8eFdn5Un87-zeLEWL4
+
 
 # OpenWeatherMap (free tier available)
 OPENWEATHER_API_KEY=your_openweather_key_here
