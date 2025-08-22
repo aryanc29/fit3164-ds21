@@ -15,7 +15,14 @@ A FastAPI-based backend service for the Interactive Visualisation of Spatial Wea
    cd backend
    ```
 
-2. **Start the development environment**
+2. **Configure environment variables**
+   ```bash
+   # Copy the example environment file
+   cp .env.example .env
+   # Edit .env and add your actual API keys (NEVER commit this file)
+   ```
+
+3. **Start the development environment**
    
    **Windows:**
    ```bash
@@ -72,11 +79,15 @@ backend/
 
 ## 🔧 Configuration
 
+⚠️ **Security Note**: Never commit API keys or secrets to the repository!
+
 The application uses environment variables for configuration. Copy `.env.example` to `.env` and update the values:
 
 ```bash
 cp .env.example .env
 ```
+
+**Important**: The `.env` file is in `.gitignore` and should never be committed. Update it with your actual API keys:
 
 Key configuration options:
 - `DATABASE_URL`: PostgreSQL connection string
