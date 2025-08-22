@@ -1,8 +1,10 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.trustedhost import TrustedHostMiddleware
+from fastapi.staticfiles import StaticFiles
 import structlog
 from contextlib import asynccontextmanager
+import os
 
 from app.api.router import api_router
 from app.core.config import settings
@@ -70,11 +72,26 @@ app.add_middleware(
 # Include API routes
 app.include_router(api_router, prefix="/api/v1")
 
+# Serve static files if the directory exists
+static_dir = os.path.join(os.path.dirname(__file__), "static")
+if os.path.exists(static_dir):
+    app.mount("/static", StaticFiles(directory=static_dir), name="static")
+    logger.info(f"Serving static files from: {static_dir}")
+
 
 @app.get("/health")
 async def health_check():
     """Health check endpoint"""
     return {"status": "healthy", "service": "weather-data-api"}
+
+
+@app.get("/")
+async def root():
+    """Root endpoint - redirect to test interface"""
+    from fastapi.responses import RedirectResponse
+    if os.path.exists(static_dir):
+        return RedirectResponse(url="/static/index.html")
+    return {"message": "Weather Data Visualization API", "docs": "/docs"}
 
 
 if __name__ == "__main__":

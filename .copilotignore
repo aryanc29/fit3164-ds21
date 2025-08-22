@@ -1,0 +1,28 @@
+# Environment files containing API keys and secrets
+.env
+.env.local
+.env.production
+.env.staging
+
+# API key files
+**/api_keys.json
+**/secrets.json
+**/config.json
+
+# Database credentials
+**/database.ini
+**/db_config.py
+
+# Any file containing credentials or tokens
+**/*credential*
+**/*secret*
+**/*token*
+**/*key*
+
+# Log files that might contain sensitive data
+*.log
+logs/
+
+# Backup files
+*.bak
+*.backup

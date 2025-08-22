@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather API Test Interface</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #2196F3, #21CBF3);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .test-section {
+            margin-bottom: 30px;
+            padding: 25px;
+            border: 2px solid #f0f0f0;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .test-section:hover {
+            border-color: #2196F3;
+            box-shadow: 0 5px 15px rgba(33, 150, 243, 0.1);
+        }
+        
+        .test-section h2 {
+            color: #333;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .test-section .icon {
+            font-size: 1.5em;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #555;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: #2196F3;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .form-row .form-group {
+            flex: 1;
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #2196F3, #21CBF3);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(33, 150, 243, 0.3);
+        }
+        
+        .btn-success {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+        }
+        
+        .btn-warning {
+            background: linear-gradient(135deg, #FF9800, #F57C00);
+        }
+        
+        .btn-danger {
+            background: linear-gradient(135deg, #f44336, #d32f2f);
+        }
+        
+        .result {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 8px;
+            display: none;
+        }
+        
+        .result.success {
+            background: #e8f5e8;
+            border-left: 4px solid #4CAF50;
+        }
+        
+        .result.error {
+            background: #ffebee;
+            border-left: 4px solid #f44336;
+        }
+        
+        .result.info {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+        }
+        
+        .result pre {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #2196F3;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 10px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .status-bar {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .status-item {
+            flex: 1;
+            min-width: 200px;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            color: white;
+            font-weight: 600;
+        }
+        
+        .status-item.unknown { background: #9E9E9E; }
+        .status-item.success { background: #4CAF50; }
+        .status-item.error { background: #f44336; }
+        .status-item.warning { background: #FF9800; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌤️ Weather API Test Interface</h1>
+            <p>Test your hybrid Google + Free API integration</p>
+        </div>
+        
+        <div class="content">
+            <!-- Status Overview -->
+            <div class="status-bar">
+                <div class="status-item unknown" id="google-status">
+                    <div>Google APIs</div>
+                    <div>Checking...</div>
+                </div>
+                <div class="status-item unknown" id="free-status">
+                    <div>Free APIs</div>
+                    <div>Checking...</div>
+                </div>
+                <div class="status-item unknown" id="overall-status">
+                    <div>Overall Status</div>
+                    <div>Ready to test</div>
+                </div>
+            </div>
+            
+            <!-- Quick Test All -->
+            <div class="test-section">
+                <h2><span class="icon">🚀</span>Quick Test All APIs</h2>
+                <p>Run a comprehensive test of all API functionality with sample data.</p>
+                <button class="btn btn-success" onclick="testAllAPIs()">Test All APIs</button>
+                <button class="btn btn-warning" onclick="testGoogleStatus()">Check Google APIs</button>
+                <button class="btn btn-warning" onclick="testFreeAPIs()">Check Free APIs</button>
+                
+                <div class="loading" id="loading-all">
+                    <div class="spinner"></div>
+                    <div>Testing all APIs...</div>
+                </div>
+                <div class="result" id="result-all"></div>
+            </div>
+            
+            <!-- Geocoding Test -->
+            <div class="test-section">
+                <h2><span class="icon">📍</span>Geocoding Test</h2>
+                <p>Convert addresses to coordinates using Google Maps or OpenStreetMap.</p>
+                
+                <div class="form-group">
+                    <label for="geocode-address">Address:</label>
+                    <input type="text" id="geocode-address" placeholder="e.g., Sydney, Australia" value="Melbourne, Australia">
+                </div>
+                
+                <button class="btn" onclick="testGeocode('auto')">Auto (Hybrid)</button>
+                <button class="btn" onclick="testGeocode('google')">Google Only</button>
+                <button class="btn" onclick="testGeocode('nominatim')">Free Only</button>
+                
+                <div class="loading" id="loading-geocode">
+                    <div class="spinner"></div>
+                    <div>Geocoding address...</div>
+                </div>
+                <div class="result" id="result-geocode"></div>
+            </div>
+            
+            <!-- Weather Test -->
+            <div class="test-section">
+                <h2><span class="icon">🌡️</span>Weather Data Test</h2>
+                <p>Get current weather conditions for any location.</p>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="weather-lat">Latitude:</label>
+                        <input type="number" id="weather-lat" step="0.0001" placeholder="e.g., -37.8136" value="-37.8136">
+                    </div>
+                    <div class="form-group">
+                        <label for="weather-lng">Longitude:</label>
+                        <input type="number" id="weather-lng" step="0.0001" placeholder="e.g., 144.9631" value="144.9631">
+                    </div>
+                </div>
+                
+                <button class="btn" onclick="testWeather()">Get Weather Data</button>
+                <button class="btn" onclick="useCurrentLocation()">Use My Location</button>
+                
+                <div class="loading" id="loading-weather">
+                    <div class="spinner"></div>
+                    <div>Getting weather data...</div>
+                </div>
+                <div class="result" id="result-weather"></div>
+            </div>
+            
+            <!-- Weather Stations Test -->
+            <div class="test-section">
+                <h2><span class="icon">🏭</span>Weather Stations Test</h2>
+                <p>Find nearby weather stations using Google Places or fallback data.</p>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="stations-lat">Latitude:</label>
+                        <input type="number" id="stations-lat" step="0.0001" placeholder="e.g., -37.8136" value="-37.8136">
+                    </div>
+                    <div class="form-group">
+                        <label for="stations-lng">Longitude:</label>
+                        <input type="number" id="stations-lng" step="0.0001" placeholder="e.g., 144.9631" value="144.9631">
+                    </div>
+                    <div class="form-group">
+                        <label for="stations-radius">Radius (km):</label>
+                        <input type="number" id="stations-radius" placeholder="50" value="50" min="1" max="200">
+                    </div>
+                </div>
+                
+                <button class="btn" onclick="testWeatherStations()">Find Weather Stations</button>
+                
+                <div class="loading" id="loading-stations">
+                    <div class="spinner"></div>
+                    <div>Searching for weather stations...</div>
+                </div>
+                <div class="result" id="result-stations"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = '/api/v1/test';
+        
+        // Check API status on page load
+        window.addEventListener('load', () => {
+            checkAPIStatus();
+        });
+        
+        async function checkAPIStatus() {
+            try {
+                // Check Google APIs
+                const googleResponse = await fetch(`${API_BASE}/google-status`);
+                const googleData = await googleResponse.json();
+                updateStatusItem('google-status', googleData.google_api_key ? 'success' : 'error', 
+                    googleData.google_api_key ? 'Available' : 'Not configured');
+                
+                // Check Free APIs
+                const freeResponse = await fetch(`${API_BASE}/free-apis`);
+                const freeData = await freeResponse.json();
+                updateStatusItem('free-status', freeData.summary.success ? 'success' : 'error',
+                    `${freeData.summary.passed}/${freeData.summary.total} working`);
+                
+                // Update overall status
+                const overallSuccess = (googleData.google_api_key || freeData.summary.success);
+                updateStatusItem('overall-status', overallSuccess ? 'success' : 'error',
+                    overallSuccess ? 'Ready' : 'Issues detected');
+                    
+            } catch (error) {
+                console.error('Status check failed:', error);
+                updateStatusItem('overall-status', 'error', 'Connection failed');
+            }
+        }
+        
+        function updateStatusItem(id, status, text) {
+            const element = document.getElementById(id);
+            element.className = `status-item ${status}`;
+            element.children[1].textContent = text;
+        }
+        
+        async function testAllAPIs() {
+            showLoading('loading-all');
+            hideResult('result-all');
+            
+            try {
+                const response = await fetch(`${API_BASE}/all-apis`);
+                const data = await response.json();
+                
+                hideLoading('loading-all');
+                showResult('result-all', data.summary.success ? 'success' : 'error', 
+                    data.message, data);
+                    
+            } catch (error) {
+                hideLoading('loading-all');
+                showResult('result-all', 'error', 'Failed to test APIs', {error: error.message});
+            }
+        }
+        
+        async function testGoogleStatus() {
+            showLoading('loading-all');
+            hideResult('result-all');
+            
+            try {
+                const response = await fetch(`${API_BASE}/google-status`);
+                const data = await response.json();
+                
+                hideLoading('loading-all');
+                showResult('result-all', 'info', 'Google API Status', data);
+                
+            } catch (error) {
+                hideLoading('loading-all');
+                showResult('result-all', 'error', 'Failed to check Google APIs', {error: error.message});
+            }
+        }
+        
+        async function testFreeAPIs() {
+            showLoading('loading-all');
+            hideResult('result-all');
+            
+            try {
+                const response = await fetch(`${API_BASE}/free-apis`);
+                const data = await response.json();
+                
+                hideLoading('loading-all');
+                showResult('result-all', data.summary.success ? 'success' : 'error', 
+                    data.message, data);
+                    
+            } catch (error) {
+                hideLoading('loading-all');
+                showResult('result-all', 'error', 'Failed to test free APIs', {error: error.message});
+            }
+        }
+        
+        async function testGeocode(source = 'auto') {
+            const address = document.getElementById('geocode-address').value;
+            if (!address.trim()) {
+                showResult('result-geocode', 'error', 'Please enter an address');
+                return;
+            }
+            
+            showLoading('loading-geocode');
+            hideResult('result-geocode');
+            
+            try {
+                const params = new URLSearchParams({address});
+                if (source !== 'auto') {
+                    params.append('source', source);
+                }
+                
+                const response = await fetch(`${API_BASE}/geocode?${params}`);
+                const data = await response.json();
+                
+                hideLoading('loading-geocode');
+                
+                if (response.ok) {
+                    showResult('result-geocode', 'success', data.message, data.data);
+                } else {
+                    showResult('result-geocode', 'error', data.detail || 'Geocoding failed', data);
+                }
+                
+            } catch (error) {
+                hideLoading('loading-geocode');
+                showResult('result-geocode', 'error', 'Network error', {error: error.message});
+            }
+        }
+        
+        async function testWeather() {
+            const lat = parseFloat(document.getElementById('weather-lat').value);
+            const lng = parseFloat(document.getElementById('weather-lng').value);
+            
+            if (isNaN(lat) || isNaN(lng)) {
+                showResult('result-weather', 'error', 'Please enter valid coordinates');
+                return;
+            }
+            
+            showLoading('loading-weather');
+            hideResult('result-weather');
+            
+            try {
+                const params = new URLSearchParams({lat, lng});
+                const response = await fetch(`${API_BASE}/weather?${params}`);
+                const data = await response.json();
+                
+                hideLoading('loading-weather');
+                
+                if (response.ok) {
+                    showResult('result-weather', 'success', data.message, data.data);
+                } else {
+                    showResult('result-weather', 'error', data.detail || 'Weather data failed', data);
+                }
+                
+            } catch (error) {
+                hideLoading('loading-weather');
+                showResult('result-weather', 'error', 'Network error', {error: error.message});
+            }
+        }
+        
+        async function testWeatherStations() {
+            const lat = parseFloat(document.getElementById('stations-lat').value);
+            const lng = parseFloat(document.getElementById('stations-lng').value);
+            const radius = parseInt(document.getElementById('stations-radius').value);
+            
+            if (isNaN(lat) || isNaN(lng) || isNaN(radius)) {
+                showResult('result-stations', 'error', 'Please enter valid coordinates and radius');
+                return;
+            }
+            
+            showLoading('loading-stations');
+            hideResult('result-stations');
+            
+            try {
+                const params = new URLSearchParams({lat, lng, radius});
+                const response = await fetch(`${API_BASE}/stations?${params}`);
+                const data = await response.json();
+                
+                hideLoading('loading-stations');
+                
+                if (response.ok) {
+                    showResult('result-stations', 'success', data.message, data.data);
+                } else {
+                    showResult('result-stations', 'error', data.detail || 'Weather stations search failed', data);
+                }
+                
+            } catch (error) {
+                hideLoading('loading-stations');
+                showResult('result-stations', 'error', 'Network error', {error: error.message});
+            }
+        }
+        
+        function useCurrentLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        document.getElementById('weather-lat').value = position.coords.latitude.toFixed(4);
+                        document.getElementById('weather-lng').value = position.coords.longitude.toFixed(4);
+                        showResult('result-weather', 'info', 'Location updated! Click "Get Weather Data" to test.');
+                    },
+                    (error) => {
+                        showResult('result-weather', 'error', 'Could not get your location: ' + error.message);
+                    }
+                );
+            } else {
+                showResult('result-weather', 'error', 'Geolocation is not supported by this browser');
+            }
+        }
+        
+        function showLoading(id) {
+            document.getElementById(id).style.display = 'block';
+        }
+        
+        function hideLoading(id) {
+            document.getElementById(id).style.display = 'none';
+        }
+        
+        function showResult(id, type, message, data = null) {
+            const element = document.getElementById(id);
+            element.className = `result ${type}`;
+            element.style.display = 'block';
+            
+            let html = `<strong>${message}</strong>`;
+            if (data) {
+                html += `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+            }
+            
+            element.innerHTML = html;
+        }
+        
+        function hideResult(id) {
+            document.getElementById(id).style.display = 'none';
+        }
+    </script>
+</body>
+</html>
