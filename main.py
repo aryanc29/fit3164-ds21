@@ -3,7 +3,11 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 from contextlib import asynccontextmanager
+from dotenv import load_dotenv
 import os
+
+# Load environment variables from .env file
+load_dotenv()
 
 from database import init_db
 from api_routes import router as api_router
@@ -22,7 +26,7 @@ app = FastAPI(
     title="Weather Data Visualization API",
     description="Backend API for Interactive Visualisation of Spatial Weather Data",
     version="1.0.0",
-    lifespan=lifespan
+    lifespan=lifespan # to ensure that model is ready before handling requests
 )
 
 # Configure CORS
@@ -30,8 +34,8 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],  # Configure this properly for production
     allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=["*"], # method like GET, POST, PUT, DELETE
+    allow_headers=["*"], # headers like Authorization, Content-Type
 )
 
 # Mount static files for frontend
