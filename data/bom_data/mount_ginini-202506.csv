@@ -1,0 +1,43 @@
+'IDCKWCDE51,,,,,,,,,,
+Australian Government Bureau of Meteorology,,,,,,,,,,
+South Australia,,,,,,,,,,
+
+Daily Evapotranspiration for MOUNT GININI New South Wales for June 2025,,,,,,,,,,
+Issued at 22:31 GMT on Tuesday 01 July 2025,,,,,,,,,,
+© Copyright Commonwealth of Australia 2025 Bureau of Meteorology (ABN 92 637 533 532),,,,,,,,,,
+Please note Copyright Disclaimer and Privacy Notice <http://www.bom.gov.au/other/copyright.shtml>,,,,,,,,,,
+
+,,Evapo-,,Pan,,,Maximum,Minimum,Average,
+,,Transpiration,Rain,Evaporation,Maximum,Minimum,Relative,Relative,10m Wind,Solar
+Station Name,Date,0000-2400,0900-0900,0900-0900,Temperature,Temperature,Humidity,Humidity,Speed,Radiation
+,,(mm),(mm),(mm),(°C),(°C),(%),(%),(m/sec),(MJ/sq m)
+MOUNT GININI,01/06/2025,1.9,0.0, ,10.7,2.9,53,20,2.69,10.57
+MOUNT GININI,02/06/2025,1.9,0.0, ,8.5,2.2,70,18,3.49,8.50
+MOUNT GININI,03/06/2025,1.1,0.0, ,6.6,1.2,98,61,4.68,9.74
+MOUNT GININI,04/06/2025,1.2,1.2, ,5.5,-4.8,96,48,4.56,10.44
+MOUNT GININI,05/06/2025,1.8,0.0, ,6.8,-3.3,69,12,3.42,10.40
+MOUNT GININI,06/06/2025,2.0,0.0, ,6.4,1.8,98,8,5.14,6.84
+MOUNT GININI,07/06/2025,0.3,1.2, ,-0.7,-2.0,99,97,5.57,3.75
+MOUNT GININI,08/06/2025,0.3,2.4, ,-2.3,-2.9,98,96,4.23,5.87
+MOUNT GININI,09/06/2025,0.4,0.4, ,-1.3,-4.7,98,95,0.00,5.78
+MOUNT GININI,10/06/2025,0.5,2.0, ,0.0,-3.6,99,97,0.00,8.17
+MOUNT GININI,11/06/2025, ,7.6, , ,-3.0,98,95,0.00,7.03
+MOUNT GININI,12/06/2025, , , , , ,98,92,0.48,8.42
+MOUNT GININI,13/06/2025, , , , , , , , ,8.38
+MOUNT GININI,15/06/2025, , , , , , , , ,4.75
+MOUNT GININI,16/06/2025, , , ,2.4, , , , ,9.36
+MOUNT GININI,17/06/2025,0.5,0.0, ,0.7,-2.8,98,87,7.49,8.42
+MOUNT GININI,18/06/2025,1.7,0.2, ,5.7,-4.9,96,11,3.99,10.02
+MOUNT GININI,19/06/2025,1.9,0.0, ,6.3,0.5,54,9,3.49,9.30
+MOUNT GININI,20/06/2025,2.2,0.0, ,9.2,3.0,31,8,3.17,10.06
+MOUNT GININI,21/06/2025,2.7,0.0, ,8.5,3.1,31,7,4.41,10.09
+MOUNT GININI,22/06/2025,2.7,0.0, ,8.6,4.2,24,8,4.07,9.84
+MOUNT GININI,23/06/2025,1.3,0.0, ,5.8,1.3,100,49,7.24,4.39
+MOUNT GININI,24/06/2025,0.7,26.4, ,3.3,2.9,100,77,8.94,6.47
+MOUNT GININI,25/06/2025,0.3,0.6, ,-1.9,-3.0,98,94,5.45,4.37
+MOUNT GININI,26/06/2025,0.6,0.0, ,0.2,-7.0,94,73,3.98,9.72
+MOUNT GININI,27/06/2025,0.8,8.0, ,3.4,-4.5,98,29,1.51,9.93
+MOUNT GININI,28/06/2025,1.2,2.8, ,3.5,-1.9,99,35,4.13,9.86
+MOUNT GININI,29/06/2025,1.3,1.0, ,5.2,-2.4,99,25,3.50,10.00
+MOUNT GININI,30/06/2025,0.4,0.2, ,1.0,-2.7,99,90,3.26,8.28
+Totals:,,29.7,54, ,,,,,, 

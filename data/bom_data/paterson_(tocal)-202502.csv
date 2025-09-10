@@ -1,0 +1,42 @@
+'IDCKWCDE51,,,,,,,,,,
+Australian Government Bureau of Meteorology,,,,,,,,,,
+South Australia,,,,,,,,,,
+
+Daily Evapotranspiration for PATERSON (TOCAL) New South Wales for February 2025,,,,,,,,,,
+Issued at 22:31 GMT on Saturday 01 March 2025,,,,,,,,,,
+© Copyright Commonwealth of Australia 2025 Bureau of Meteorology (ABN 92 637 533 532),,,,,,,,,,
+Please note Copyright Disclaimer and Privacy Notice <http://www.bom.gov.au/other/copyright.shtml>,,,,,,,,,,
+
+,,Evapo-,,Pan,,,Maximum,Minimum,Average,
+,,Transpiration,Rain,Evaporation,Maximum,Minimum,Relative,Relative,10m Wind,Solar
+Station Name,Date,0000-2400,0900-0900,0900-0900,Temperature,Temperature,Humidity,Humidity,Speed,Radiation
+,,(mm),(mm),(mm),(°C),(°C),(%),(%),(m/sec),(MJ/sq m)
+PATERSON (TOCAL),01/02/2025,3.6,2.6, ,27.2,21.1,94,54,2.34,14.14
+PATERSON (TOCAL),02/02/2025,5.5,0.0, ,29.6,17.0,95,48,2.16,26.86
+PATERSON (TOCAL),03/02/2025, ,0.0, , ,17.1,95,51,3.05,23.25
+PATERSON (TOCAL),04/02/2025,5.1, , ,31.2,20.0,91,45,2.03,22.09
+PATERSON (TOCAL),05/02/2025, ,0.0, , ,20.0,95,38,1.94,19.64
+PATERSON (TOCAL),06/02/2025, , , ,29.1, ,94,58,2.46,23.85
+PATERSON (TOCAL),07/02/2025,6.2,0.2, ,31.9,17.6,95,37,2.31,28.68
+PATERSON (TOCAL),08/02/2025,5.5,0.0, ,32.8,16.9,95,33,1.75,24.82
+PATERSON (TOCAL),09/02/2025,4.6,0.6, ,30.5,21.2,93,52,1.90,20.30
+PATERSON (TOCAL),10/02/2025,2.6,0.8, ,27.3,20.5,95,62,1.58,10.29
+PATERSON (TOCAL),11/02/2025,1.9,2.2, ,22.8,16.4,96,70,1.52,7.62
+PATERSON (TOCAL),12/02/2025,3.4,7.4, ,28.6,15.8,96,60,1.66,15.18
+PATERSON (TOCAL),13/02/2025,6.4,2.4, ,31.9,19.7,93,49,4.37,26.86
+PATERSON (TOCAL),14/02/2025,4.5,0.2, ,31.7,19.4,92,52,1.56,20.32
+PATERSON (TOCAL),15/02/2025,4.2,1.8, ,28.0,21.1,95,54,2.22,19.07
+PATERSON (TOCAL),16/02/2025,5.2,0.0, ,25.0,14.9,90,25,2.61,25.24
+PATERSON (TOCAL),17/02/2025,4.7,0.0, ,25.3,11.3,91,39,2.01,26.05
+PATERSON (TOCAL),18/02/2025,5.2,0.0, ,29.2,10.8,96,31,1.71,26.92
+PATERSON (TOCAL),19/02/2025, ,0.0, , ,14.0,95,48,2.78,24.64
+PATERSON (TOCAL),20/02/2025, , , ,24.2, ,94,68,1.91,7.54
+PATERSON (TOCAL),21/02/2025,3.1,0.8, ,26.0,18.2,93,65,1.73,14.20
+PATERSON (TOCAL),22/02/2025,5.2,0.0, ,28.7,17.4,95,50,3.22,24.41
+PATERSON (TOCAL),23/02/2025,5.5,0.0, ,31.9,14.7,95,39,2.00,26.22
+PATERSON (TOCAL),24/02/2025,6.1,0.0, ,36.8,17.0,94,26,1.96,25.19
+PATERSON (TOCAL),25/02/2025,1.5,0.0, ,25.0,22.5,95,75,2.21,4.19
+PATERSON (TOCAL),26/02/2025,5.0,6.8, ,31.7,20.0,95,48,1.50,24.42
+PATERSON (TOCAL),27/02/2025,5.5,0.0, ,33.9,18.0,96,39,1.93,24.54
+PATERSON (TOCAL),28/02/2025,5.8,0.0, ,37.2,18.1,95,25,1.82,23.09
+Totals:,,106.3,25.8, ,,,,,, 

@@ -1,0 +1,44 @@
+'IDCKWCDE51,,,,,,,,,,
+Australian Government Bureau of Meteorology,,,,,,,,,,
+South Australia,,,,,,,,,,
+
+Daily Evapotranspiration for FOWLERS GAP New South Wales for September 2024,,,,,,,,,,
+Issued at 22:35 GMT on Tuesday 01 October 2024,,,,,,,,,,
+© Copyright Commonwealth of Australia 2024 Bureau of Meteorology (ABN 92 637 533 532),,,,,,,,,,
+Please note Copyright Disclaimer and Privacy Notice <http://www.bom.gov.au/other/copyright.shtml>,,,,,,,,,,
+
+,,Evapo-,,Pan,,,Maximum,Minimum,Average,
+,,Transpiration,Rain,Evaporation,Maximum,Minimum,Relative,Relative,10m Wind,Solar
+Station Name,Date,0000-2400,0900-0900,0900-0900,Temperature,Temperature,Humidity,Humidity,Speed,Radiation
+,,(mm),(mm),(mm),(°C),(°C),(%),(%),(m/sec),(MJ/sq m)
+FOWLERS GAP,01/09/2024,5.5,0.0, ,26.0,7.8,62,10,3.96,18.55
+FOWLERS GAP,02/09/2024,5.5,0.0, ,21.0,13.0,53,21,5.85,18.64
+FOWLERS GAP,03/09/2024,4.3,0.0, ,21.1,5.1,65,22,3.85,18.80
+FOWLERS GAP,04/09/2024,6.0,0.0, ,26.4,4.3,62,10,4.54,18.93
+FOWLERS GAP,05/09/2024,9.9,0.0, ,31.9,14.6,26,12,7.90,19.05
+FOWLERS GAP,06/09/2024,10.3,0.0, ,33.8,21.0,51,19,9.18,19.20
+FOWLERS GAP,07/09/2024,5.2,0.0, ,24.3,14.8,65,26,4.77,17.30
+FOWLERS GAP,08/09/2024,4.6,0.0, ,23.3,15.4,55,20,3.38,16.24
+FOWLERS GAP,09/09/2024,3.9,0.0, ,23.8,9.9,61,25,2.14,19.76
+FOWLERS GAP,10/09/2024,3.8,0.0, ,26.0,6.5,68,15,1.66,19.71
+FOWLERS GAP,11/09/2024,5.3,0.0, ,28.1,8.1,49,14,3.22,16.42
+FOWLERS GAP,12/09/2024,5.8,0.0, ,20.3,10.0,76,16,7.63,20.10
+FOWLERS GAP,13/09/2024,5.6,0.0, ,22.0,8.7,67,18,5.60,20.43
+FOWLERS GAP,14/09/2024,5.6,0.0, ,21.1,8.0,65,20,6.51,20.16
+FOWLERS GAP,15/09/2024,5.9,0.0, ,17.4,6.8,51,16,8.45,20.65
+FOWLERS GAP,16/09/2024,5.8,0.0, ,20.5,6.7,49,14,5.89,20.75
+FOWLERS GAP,17/09/2024,4.2,0.0, ,22.6,1.3,57,16,2.42,20.95
+FOWLERS GAP,18/09/2024,4.9,0.0, ,26.4,2.1,51,7,2.43,21.05
+FOWLERS GAP,19/09/2024,7.3,0.0, ,27.5,7.1,34,7,5.01,21.22
+FOWLERS GAP,20/09/2024,5.0,0.0, ,22.5,8.2,62,24,3.96,21.50
+FOWLERS GAP,21/09/2024,4.8,0.0, ,23.7,7.0,61,22,3.07,21.72
+FOWLERS GAP,22/09/2024,4.7,0.0, ,25.5,6.7,57,13,2.36,21.81
+FOWLERS GAP,23/09/2024,4.4,0.0, ,27.8,6.7,48,11,1.62,21.11
+FOWLERS GAP,24/09/2024,4.1,0.0, ,26.7,15.3,91,11,2.92,9.87
+FOWLERS GAP,25/09/2024,1.6,1.4, ,18.0,14.5,99,79,2.94,7.62
+FOWLERS GAP,26/09/2024,5.0,13.0, ,18.1,8.8,89,20,7.16,22.51
+FOWLERS GAP,27/09/2024,4.9,0.0, ,21.5,7.4,73,33,4.93,22.98
+FOWLERS GAP,28/09/2024,5.3,0.0, ,24.4,9.9,77,22,4.20,21.31
+FOWLERS GAP,29/09/2024,4.5,0.0, ,24.1,15.2,65,27,3.74,11.88
+FOWLERS GAP,30/09/2024,5.5,0.0, ,22.7,11.0,77,22,4.75,23.27
+Totals:,,159.2,14.4, ,,,,,, 

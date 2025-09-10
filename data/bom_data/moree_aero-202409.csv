@@ -1,0 +1,44 @@
+'IDCKWCDE51,,,,,,,,,,
+Australian Government Bureau of Meteorology,,,,,,,,,,
+South Australia,,,,,,,,,,
+
+Daily Evapotranspiration for MOREE AERO New South Wales for September 2024,,,,,,,,,,
+Issued at 22:35 GMT on Tuesday 01 October 2024,,,,,,,,,,
+© Copyright Commonwealth of Australia 2024 Bureau of Meteorology (ABN 92 637 533 532),,,,,,,,,,
+Please note Copyright Disclaimer and Privacy Notice <http://www.bom.gov.au/other/copyright.shtml>,,,,,,,,,,
+
+,,Evapo-,,Pan,,,Maximum,Minimum,Average,
+,,Transpiration,Rain,Evaporation,Maximum,Minimum,Relative,Relative,10m Wind,Solar
+Station Name,Date,0000-2400,0900-0900,0900-0900,Temperature,Temperature,Humidity,Humidity,Speed,Radiation
+,,(mm),(mm),(mm),(°C),(°C),(%),(%),(m/sec),(MJ/sq m)
+MOREE AERO,01/09/2024,4.8,0.0, ,31.9,10.5,85,34,2.88,19.18
+MOREE AERO,02/09/2024,5.8,0.0, ,27.0,12.1,94,16,5.22,19.35
+MOREE AERO,03/09/2024,4.2,0.0, ,21.4,3.6,82,24,3.85,19.45
+MOREE AERO,04/09/2024,4.5,0.0, ,23.6,6.6,77,32,4.15,19.54
+MOREE AERO,05/09/2024,4.7,0.0, ,24.9,9.4,91,35,4.74,19.71
+MOREE AERO,06/09/2024,4.7,0.0, ,25.8,9.8,91,40,4.90,19.74
+MOREE AERO,07/09/2024,5.4,0.0, ,30.0,10.9,88,31,4.12,19.97
+MOREE AERO,08/09/2024,5.4,0.0, ,29.4,12.9,86,33,4.24,19.96
+MOREE AERO,09/09/2024,3.5,0.0, ,23.2,13.7,84,33,3.54,10.14
+MOREE AERO,10/09/2024,4.7,0.0, ,26.8,5.4,92,19,2.95,20.34
+MOREE AERO,11/09/2024,4.6,0.0, ,27.7,11.8,100,49,5.34,19.40
+MOREE AERO,12/09/2024,2.7,17.0, ,21.9,14.8,100,65,3.22,14.63
+MOREE AERO,13/09/2024,4.1,2.4, ,22.9,9.0,100,47,5.06,20.89
+MOREE AERO,14/09/2024,3.6,0.0, ,22.3,6.5,100,36,2.17,21.10
+MOREE AERO,15/09/2024,4.2,0.0, ,19.7,5.5,94,36,5.67,21.25
+MOREE AERO,16/09/2024,4.9,0.0, ,21.3,2.0,91,16,4.50,21.42
+MOREE AERO,17/09/2024,4.0,0.0, ,22.6,1.8,85,24,2.44,21.58
+MOREE AERO,18/09/2024,3.9,0.0, ,25.6,5.9,89,25,1.56,21.68
+MOREE AERO,19/09/2024,6.6,0.0, ,28.4,7.3,89,14,4.92,21.81
+MOREE AERO,20/09/2024,5.9,0.0, ,27.5,4.5,86,13,3.81,21.93
+MOREE AERO,21/09/2024,5.3,0.0, ,24.9,6.2,77,18,3.69,22.09
+MOREE AERO,22/09/2024,5.0,0.0, ,25.8,5.3,81,21,3.01,22.20
+MOREE AERO,23/09/2024,5.7,0.0, ,28.2,6.7,80,17,3.43,22.39
+MOREE AERO,24/09/2024,6.4,0.0, ,29.2,9.3,74,26,5.34,19.02
+MOREE AERO,25/09/2024,7.4,0.0, ,29.8,14.4,71,22,6.28,20.83
+MOREE AERO,26/09/2024,2.4,0.0, ,19.4,17.9,99,41,3.25,6.82
+MOREE AERO,27/09/2024,2.1,4.8, ,18.2,12.1,99,69,5.23,9.47
+MOREE AERO,28/09/2024,4.6,5.8, ,24.7,8.9,94,38,4.50,19.95
+MOREE AERO,29/09/2024,4.8,0.2, ,28.0,9.3,98,40,3.00,22.59
+MOREE AERO,30/09/2024,5.8,0.0, ,28.1,14.0,96,29,4.84,22.33
+Totals:,,141.7,30.2, ,,,,,, 

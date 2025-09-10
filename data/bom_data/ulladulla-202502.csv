@@ -1,0 +1,42 @@
+'IDCKWCDE51,,,,,,,,,,
+Australian Government Bureau of Meteorology,,,,,,,,,,
+South Australia,,,,,,,,,,
+
+Daily Evapotranspiration for ULLADULLA New South Wales for February 2025,,,,,,,,,,
+Issued at 22:31 GMT on Saturday 01 March 2025,,,,,,,,,,
+© Copyright Commonwealth of Australia 2025 Bureau of Meteorology (ABN 92 637 533 532),,,,,,,,,,
+Please note Copyright Disclaimer and Privacy Notice <http://www.bom.gov.au/other/copyright.shtml>,,,,,,,,,,
+
+,,Evapo-,,Pan,,,Maximum,Minimum,Average,
+,,Transpiration,Rain,Evaporation,Maximum,Minimum,Relative,Relative,10m Wind,Solar
+Station Name,Date,0000-2400,0900-0900,0900-0900,Temperature,Temperature,Humidity,Humidity,Speed,Radiation
+,,(mm),(mm),(mm),(°C),(°C),(%),(%),(m/sec),(MJ/sq m)
+ULLADULLA,01/02/2025,4.5,0.0, ,25.0,17.6,94,74,2.42,25.56
+ULLADULLA,02/02/2025,4.7,0.0, ,25.0,18.7,91,73,2.90,26.41
+ULLADULLA,03/02/2025,5.2,0.8, ,26.0,18.8,88,73,3.56,28.96
+ULLADULLA,04/02/2025,5.1,0.6, ,26.0,19.2,92,74,3.10,28.82
+ULLADULLA,05/02/2025,3.6,1.0, ,25.2,21.8,94,73,4.04,17.28
+ULLADULLA,06/02/2025,4.9,0.4, ,25.6,19.8,92,76,2.54,28.09
+ULLADULLA,07/02/2025,5.2,0.0, ,26.1,20.4,90,70,4.24,28.24
+ULLADULLA,08/02/2025,2.8,0.4, ,25.2,21.5,97,77,2.86,12.63
+ULLADULLA,09/02/2025,3.5,25.0, ,25.5,19.4,97,77,2.27,18.73
+ULLADULLA,10/02/2025,2.5,7.0, ,23.8,18.5,95,82,3.75,12.04
+ULLADULLA,11/02/2025,4.5,0.6, ,24.9,18.6,92,69,2.88,25.23
+ULLADULLA,12/02/2025,4.2,3.2, ,25.1,19.4,95,77,2.62,23.98
+ULLADULLA,13/02/2025,4.4,1.6, ,26.0,20.2,96,76,3.70,24.80
+ULLADULLA,14/02/2025,1.8,0.0, ,24.5,21.9,97,82,2.74,7.00
+ULLADULLA,15/02/2025,3.9,28.2, ,23.6,16.8,97,66,3.79,21.70
+ULLADULLA,16/02/2025,4.7,10.2, ,20.5,9.9,93,45,5.39,26.89
+ULLADULLA,17/02/2025,4.8,0.0, ,21.1,12.3,73,48,3.60,26.71
+ULLADULLA,18/02/2025,4.0,0.0, ,23.3,13.9,85,58,2.02,22.91
+ULLADULLA,19/02/2025,2.2,0.0, ,21.4,17.1,93,64,2.08,9.07
+ULLADULLA,20/02/2025,3.2,0.8, ,21.7,16.3,92,57,3.68,13.87
+ULLADULLA,21/02/2025,4.3,0.0, ,24.1,15.9,87,72,3.41,25.33
+ULLADULLA,22/02/2025,4.5,0.0, ,25.2,19.2,89,69,3.86,24.25
+ULLADULLA,23/02/2025,3.5,0.0, ,25.0,19.4,87,69,3.83,15.77
+ULLADULLA,24/02/2025,3.5,0.0, ,24.0,19.3,90,67,4.76,15.76
+ULLADULLA,25/02/2025,1.6,0.8, ,22.0,18.7,88,70,1.52,4.98
+ULLADULLA,26/02/2025,4.1,0.0, ,24.4,17.1,91,76,2.95,24.74
+ULLADULLA,27/02/2025,3.0,0.0, ,25.4,19.2,97,79,2.21,16.19
+ULLADULLA,28/02/2025,4.5,0.0, ,27.3,20.7,89,67,3.16,22.67
+Totals:,,108.7,80.6, ,,,,,, 

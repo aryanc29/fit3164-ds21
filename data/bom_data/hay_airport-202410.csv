@@ -1,0 +1,45 @@
+'IDCKWCDE51,,,,,,,,,,
+Australian Government Bureau of Meteorology,,,,,,,,,,
+South Australia,,,,,,,,,,
+
+Daily Evapotranspiration for HAY AIRPORT New South Wales for October 2024,,,,,,,,,,
+Issued at 22:35 GMT on Friday 01 November 2024,,,,,,,,,,
+© Copyright Commonwealth of Australia 2024 Bureau of Meteorology (ABN 92 637 533 532),,,,,,,,,,
+Please note Copyright Disclaimer and Privacy Notice <http://www.bom.gov.au/other/copyright.shtml>,,,,,,,,,,
+
+,,Evapo-,,Pan,,,Maximum,Minimum,Average,
+,,Transpiration,Rain,Evaporation,Maximum,Minimum,Relative,Relative,10m Wind,Solar
+Station Name,Date,0000-2400,0900-0900,0900-0900,Temperature,Temperature,Humidity,Humidity,Speed,Radiation
+,,(mm),(mm),(mm),(°C),(°C),(%),(%),(m/sec),(MJ/sq m)
+HAY AIRPORT,01/10/2024,4.5,0.0, ,23.5,5.1,100,33,3.68,22.25
+HAY AIRPORT,02/10/2024,4.3,0.0, ,24.7,4.5,99,22,2.16,22.43
+HAY AIRPORT,03/10/2024,7.0,0.0, ,28.6,9.7,79,23,6.18,21.78
+HAY AIRPORT,04/10/2024,7.9,0.2, ,31.3,15.6,71,23,7.54,15.63
+HAY AIRPORT,05/10/2024,5.1,0.2, ,24.7,7.5,98,26,4.76,19.72
+HAY AIRPORT,06/10/2024,5.0,0.0, ,25.1,8.3,92,32,5.02,18.33
+HAY AIRPORT,07/10/2024,6.2,0.0, ,29.6,8.0,92,26,4.73,21.22
+HAY AIRPORT,08/10/2024,5.0,0.0, ,20.6,4.9,99,21,5.47,21.98
+HAY AIRPORT,09/10/2024,4.6,0.0, ,24.2,0.4,99,27,3.01,23.49
+HAY AIRPORT,10/10/2024,6.8,0.0, ,30.4,9.2,82,15,4.13,23.55
+HAY AIRPORT,11/10/2024,6.8,0.0, ,25.1,9.4,78,15,6.15,23.50
+HAY AIRPORT,12/10/2024,6.6,0.0, ,26.9,6.1,95,8,4.60,23.81
+HAY AIRPORT,13/10/2024,6.5,0.0, ,28.5,9.2,64,21,4.22,22.62
+HAY AIRPORT,14/10/2024,6.8,0.0, ,32.4,15.2,56,13,3.63,19.39
+HAY AIRPORT,15/10/2024,5.1,0.0, ,28.3,13.9,99,37,6.03,13.03
+HAY AIRPORT,16/10/2024,3.9,8.6, ,25.2,15.8,99,55,5.13,15.88
+HAY AIRPORT,17/10/2024, ,0.0, , ,14.4,100,51,6.56,16.46
+HAY AIRPORT,18/10/2024, , , ,29.3, ,100,41,9.87,16.64
+HAY AIRPORT,19/10/2024,6.2,0.0, ,25.7,13.8,93,31,6.63,24.17
+HAY AIRPORT,20/10/2024,6.3,0.0, ,28.3,8.9,99,27,4.83,25.10
+HAY AIRPORT,21/10/2024,5.7,0.0, ,31.4,7.1,100,17,2.15,25.56
+HAY AIRPORT,22/10/2024,7.1,0.0, ,35.0,13.5,78,12,3.17,23.06
+HAY AIRPORT,23/10/2024,5.4,0.0, ,26.7,16.4,87,26,4.96,14.87
+HAY AIRPORT,24/10/2024, ,0.0, , ,6.9,100,22,6.08,25.69
+HAY AIRPORT,25/10/2024, , , ,21.4, ,91,26,5.13,25.13
+HAY AIRPORT,26/10/2024,4.5,0.0, ,25.4,2.9,92,17,1.51,25.17
+HAY AIRPORT,27/10/2024,7.0,0.0, ,31.9,10.5,74,11,3.19,25.32
+HAY AIRPORT,28/10/2024,7.1,0.0, ,26.5,13.0,81,21,5.85,26.57
+HAY AIRPORT,29/10/2024,7.0,0.0, ,28.3,7.2,92,18,4.75,26.69
+HAY AIRPORT,30/10/2024,6.5,0.0, ,30.5,6.9,87,12,2.86,26.70
+HAY AIRPORT,31/10/2024,6.9,0.0, ,27.0,11.4,70,22,5.45,23.33
+Totals:,,161.8,9, ,,,,,, 

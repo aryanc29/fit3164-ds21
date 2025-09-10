@@ -26,3 +26,6 @@ logs/
 # Backup files
 *.bak
 *.backup
+
+# remove access from env file 
+.env

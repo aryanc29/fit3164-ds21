@@ -6,7 +6,7 @@ Sets up PostGIS extension and creates initial schema
 
 import psycopg2
 import os
-from database import engine, Base
+from src.database.connection import engine, Base
 
 def setup_postgis():
     """Set up PostGIS extension in the database"""
@@ -63,7 +63,8 @@ def create_tables():
         print("📋 Creating database tables...")
         
         # Import models to register them
-        import models
+        import src.api.models
+        import src.database.models
         
         # Create all tables
         Base.metadata.create_all(bind=engine)

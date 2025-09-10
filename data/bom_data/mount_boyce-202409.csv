@@ -1,0 +1,44 @@
+'IDCKWCDE51,,,,,,,,,,
+Australian Government Bureau of Meteorology,,,,,,,,,,
+South Australia,,,,,,,,,,
+
+Daily Evapotranspiration for MOUNT BOYCE New South Wales for September 2024,,,,,,,,,,
+Issued at 22:35 GMT on Tuesday 01 October 2024,,,,,,,,,,
+© Copyright Commonwealth of Australia 2024 Bureau of Meteorology (ABN 92 637 533 532),,,,,,,,,,
+Please note Copyright Disclaimer and Privacy Notice <http://www.bom.gov.au/other/copyright.shtml>,,,,,,,,,,
+
+,,Evapo-,,Pan,,,Maximum,Minimum,Average,
+,,Transpiration,Rain,Evaporation,Maximum,Minimum,Relative,Relative,10m Wind,Solar
+Station Name,Date,0000-2400,0900-0900,0900-0900,Temperature,Temperature,Humidity,Humidity,Speed,Radiation
+,,(mm),(mm),(mm),(°C),(°C),(%),(%),(m/sec),(MJ/sq m)
+MOUNT BOYCE,01/09/2024,5.5,0.0, ,16.0,8.3,49,27,11.41,17.78
+MOUNT BOYCE,02/09/2024,4.6,0.0, ,12.6,9.9,60,31,12.31,15.74
+MOUNT BOYCE,03/09/2024,3.4,0.0, ,14.1,0.4,76,30,5.15,18.10
+MOUNT BOYCE,04/09/2024,3.7,0.0, ,17.3,3.8,59,25,3.60,18.23
+MOUNT BOYCE,05/09/2024,4.2,0.0, ,19.2,8.5,66,35,6.26,14.48
+MOUNT BOYCE,06/09/2024,4.6,0.0, ,19.9,9.3,74,37,7.60,18.54
+MOUNT BOYCE,07/09/2024,3.4,0.0, ,20.7,12.3,99,43,4.96,15.01
+MOUNT BOYCE,08/09/2024,3.1,0.0, ,13.5,8.0,96,31,6.99,12.13
+MOUNT BOYCE,09/09/2024,3.5,0.0, ,15.0,6.1,78,47,8.10,18.29
+MOUNT BOYCE,10/09/2024,3.0,0.0, ,17.6,3.9,98,42,2.81,19.21
+MOUNT BOYCE,11/09/2024,3.4,0.0, ,19.5,6.6,99,36,3.65,17.74
+MOUNT BOYCE,12/09/2024,2.0,0.2, ,14.5,9.7,98,53,3.28,8.98
+MOUNT BOYCE,13/09/2024,2.6,2.0, ,14.4,1.6,94,42,2.13,19.16
+MOUNT BOYCE,14/09/2024,3.8,0.2, ,15.6,4.4,81,29,5.09,19.81
+MOUNT BOYCE,15/09/2024,2.6,0.0, ,10.2,-0.2,83,36,3.63,18.66
+MOUNT BOYCE,16/09/2024,3.8,0.0, ,13.6,-0.5,80,18,5.22,20.27
+MOUNT BOYCE,17/09/2024,3.4,0.0, ,15.4,2.7,77,33,3.76,20.40
+MOUNT BOYCE,18/09/2024,4.7,0.0, ,15.9,3.0,73,21,7.60,20.64
+MOUNT BOYCE,19/09/2024,5.8,0.0, ,16.9,7.8,52,16,8.83,20.77
+MOUNT BOYCE,20/09/2024,4.0,0.0, ,14.5,3.7,74,34,6.94,21.00
+MOUNT BOYCE,21/09/2024,4.2,0.0, ,14.0,6.1,67,38,8.52,20.73
+MOUNT BOYCE,22/09/2024,4.0,0.0, ,15.5,5.3,70,40,7.33,18.86
+MOUNT BOYCE,23/09/2024,4.9,0.0, ,18.5,7.3,72,33,7.45,21.55
+MOUNT BOYCE,24/09/2024,4.1,0.0, ,21.5,9.9,58,28,2.77,18.25
+MOUNT BOYCE,25/09/2024,3.8,0.0, ,19.3,13.7,99,38,6.61,14.48
+MOUNT BOYCE,26/09/2024,0.9,11.0, ,5.8,5.4,99,89,3.54,6.01
+MOUNT BOYCE,27/09/2024,1.1,16.2, ,8.9,3.4,99,91,3.69,10.00
+MOUNT BOYCE,28/09/2024,1.8,6.0, ,12.5,4.7,99,72,2.78,12.77
+MOUNT BOYCE,29/09/2024,2.2,1.4, ,17.1,7.2,99,69,2.43,13.24
+MOUNT BOYCE,30/09/2024,3.5,4.2, ,17.9,7.4,99,41,3.75,20.17
+Totals:,,105.6,41.2, ,,,,,, 

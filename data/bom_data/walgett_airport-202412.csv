@@ -1,0 +1,18 @@
+'IDCKWCDE51,,,,,,,,,,
+Australian Government Bureau of Meteorology,,,,,,,,,,
+South Australia,,,,,,,,,,
+
+Daily Evapotranspiration for WALGETT AIRPORT New South Wales for December 2024,,,,,,,,,,
+Issued at 22:31 GMT on Tuesday 10 December 2024,,,,,,,,,,
+© Copyright Commonwealth of Australia 2024 Bureau of Meteorology (ABN 92 637 533 532),,,,,,,,,,
+Please note Copyright Disclaimer and Privacy Notice <http://www.bom.gov.au/other/copyright.shtml>,,,,,,,,,,
+
+,,Evapo-,,Pan,,,Maximum,Minimum,Average,
+,,Transpiration,Rain,Evaporation,Maximum,Minimum,Relative,Relative,10m Wind,Solar
+Station Name,Date,0000-2400,0900-0900,0900-0900,Temperature,Temperature,Humidity,Humidity,Speed,Radiation
+,,(mm),(mm),(mm),(°C),(°C),(%),(%),(m/sec),(MJ/sq m)
+WALGETT AIRPORT,06/12/2024, ,0.2, , , ,100,1,4.87,29.37
+WALGETT AIRPORT,07/12/2024, ,0.0, , , ,100,4,4.22,22.22
+WALGETT AIRPORT,08/12/2024, ,0.0, , , ,100,3,4.94,31.76
+WALGETT AIRPORT,09/12/2024, ,0.2, , , ,100,7,3.61,20.67
+Totals:,, ,0.4, ,,,,,, 
