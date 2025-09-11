@@ -113,11 +113,52 @@
             <div id="stationsGrid" class="station-grid"></div>
         </section>
 
+        <!-- Feedback Section -->
+        <section id="feedback" class="mb-5">
+            <h2><i class="fas fa-comments"></i> Feedback</h2>
+            <div class="card p-4">
+                <h5>Help us improve! Share your thoughts and suggestions.</h5>
+                <form id="feedbackForm">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="feedbackName" class="form-label">Name</label>
+                            <input type="text" class="form-control" id="feedbackName" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="feedbackEmail" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="feedbackEmail" required>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="feedbackType" class="form-label">Feedback Type</label>
+                        <select class="form-select" id="feedbackType" required>
+                            <option value="">Select type...</option>
+                            <option value="bug">Report a Bug</option>
+                            <option value="feature">Feature Request</option>
+                            <option value="general">General Feedback</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="feedbackSubject" class="form-label">Subject</label>
+                        <input type="text" class="form-control" id="feedbackSubject" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="feedbackMessage" class="form-label">Message</label>
+                        <textarea class="form-control" id="feedbackMessage" rows="4" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-paper-plane"></i> Submit Feedback
+                    </button>
+                </form>
+                <div id="feedbackStatus" class="mt-3" style="display: none;"></div>
+            </div>
+        </section>
+
     </div>
 
     <!-- External scripts -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-    <script src="/static/js/dashboard.js"></script>
+    <script src="/static/js/dashboard.js?v=1"></script>
 </body>
 </html>

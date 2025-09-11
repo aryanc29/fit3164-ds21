@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from sqlalchemy import func, text
-from src.database.connection import get_db
-from src.api.models import WeatherStation, WeatherData
+from src.database.connection import get_db, SessionLocal
+from src.api.models import WeatherStation, WeatherData, Feedback
 from typing import List, Optional
 from pydantic import BaseModel
 from datetime import datetime
@@ -818,3 +818,59 @@ async def compare_bom_stations(
     
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error comparing stations: {str(e)}")
+    
+
+class FeedbackCreate(BaseModel):
+    user_name: str
+    user_email: str
+    subject: str 
+    message: str
+    feedback_type: str
+
+class FeedbackResponse(BaseModel):
+    id: int
+    user_name: str
+    user_email: str
+    subject: str 
+    message: str
+    feedback_type: str
+    created_at: datetime
+    updated_at: datetime
+
+@router.post("/feedback", response_model=FeedbackResponse)
+async def submit_feedback(feedback: FeedbackCreate):
+    """Submit user feedback"""
+    with SessionLocal() as session:
+        db_feedback = Feedback(
+            user_name=feedback.user_name,
+            user_email=feedback.user_email,
+            subject=feedback.subject,
+            message=feedback.message,
+            feedback_type=feedback.feedback_type
+        )
+        session.add(db_feedback)
+        session.commit()
+        session.refresh(db_feedback)
+        return db_feedback
+
+@router.get("/feedback", response_model=List[FeedbackResponse])
+async def get_feedback(resolved: Optional[bool] = None):
+    """Get all feedback (admin use)"""
+    with SessionLocal() as session:
+        query = session.query(Feedback)
+        if resolved is not None:
+            query = query.filter(Feedback.is_resolved == resolved)
+        feedback_list = query.order_by(Feedback.created_at.desc()).all()
+        return feedback_list
+
+@router.put("/feedback/{feedback_id}")
+async def update_feedback_status(feedback_id: int, is_resolved: bool):
+    """Update feedback resolution status (admin use)"""
+    with SessionLocal() as session:
+        feedback = session.query(Feedback).filter(Feedback.id == feedback_id).first()
+        if not feedback:
+            raise HTTPException(status_code=404, detail="Feedback not found")
+        feedback.is_resolved = is_resolved
+        feedback.updated_at = datetime.utcnow()
+        session.commit()
+        return {"message": "Feedback status updated"}

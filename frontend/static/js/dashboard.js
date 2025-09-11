@@ -3,14 +3,17 @@ const API_BASE = '/api/v1';
 let weatherMap = null;
 let markersLayer = null;
 
+// Global error handler
+window.addEventListener('error', function(e) {
+    console.error('JavaScript error:', e.error);
+});
+
 document.addEventListener('DOMContentLoaded', () => {
-	loadStatistics();
-	loadStations();
-	initializeMap();
-	initializeSearch();
-	
-	// Add event listeners for map controls
-	document.getElementById('updateMapBtn')?.addEventListener('click', updateMap);
+    loadStatistics();
+    loadStations();
+    initializeMap();
+    initializeSearch();
+    initializeFeedback();
 });
 
 function initializeMap() {
@@ -415,5 +418,50 @@ async function loadStations() {
 		console.error('Stations load error', err);
 		document.getElementById('stationCount').textContent = 'Error loading stations';
 	}
+}
+
+// Feedback functionality
+function initializeFeedback() {
+    const form = document.getElementById('feedbackForm');
+
+    if (form) {
+        form.addEventListener('submit', handleFeedbackSubmit);
+    }
+}
+
+async function handleFeedbackSubmit(event) {
+    event.preventDefault();
+
+    const formData = {
+        user_name: document.getElementById('feedbackName').value,
+        user_email: document.getElementById('feedbackEmail').value,
+        subject: document.getElementById('feedbackSubject').value,
+        message: document.getElementById('feedbackMessage').value,
+        feedback_type: document.getElementById('feedbackType').value
+    };
+
+    const statusDiv = document.getElementById('feedbackStatus');
+
+    try {
+        const response = await fetch(`${API_BASE}/feedback`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(formData)
+        });
+
+        if (response.ok) {
+            statusDiv.className = 'alert alert-success';
+            statusDiv.textContent = 'Thank you for your feedback!';
+            statusDiv.style.display = 'block';
+            event.target.reset();
+            setTimeout(() => { statusDiv.style.display = 'none'; }, 5000);
+        } else {
+            throw new Error('Failed to submit feedback');
+        }
+    } catch (error) {
+        statusDiv.className = 'alert alert-danger';
+        statusDiv.textContent = 'Error submitting feedback';
+        statusDiv.style.display = 'block';
+    }
 }
 

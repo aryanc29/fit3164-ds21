@@ -95,3 +95,15 @@ class UserLocation(Base):
     # Timestamps
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+class Feedback(Base):
+    """User feedback model for BOM data"""
+    __tablename__ = 'feedback'
+    id = Column(Integer, primary_key=True, index=True)
+    user_name = Column(String(100), nullable=False)
+    user_email = Column(String(100))
+    subject = Column(String(200), nullable=False)
+    feedback_type = Column(String(50))  # bug report, feature request, general
+    message = Column(Text, nullable=False)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)

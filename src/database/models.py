@@ -85,6 +85,9 @@ class BOMWeatherData(Base):
     def __repr__(self):
         return f"<BOMWeatherData(station_id={self.station_id}, date={self.observation_date}, temp={self.max_temperature}°C)>"
 
+"""
+Data ingestion log model for BOM data files
+"""
 class BOMDataIngestionLog(Base):
     """Log of data ingestion processes"""
     __tablename__ = 'bom_ingestion_log'
@@ -105,3 +108,16 @@ class BOMDataIngestionLog(Base):
     
     def __repr__(self):
         return f"<BOMDataIngestionLog(file='{self.filename}', status='{self.status}', records={self.records_inserted})>"
+
+
+# class Feedback(Base):
+#     """User feedback model for BOM data"""
+#     __tablename__ = 'feedback'
+#     id = Column(Integer, primary_key=True, index=True)
+#     user_name = Column(String(100), nullable=False)
+#     user_email = Column(String(100))
+#     subject = Column(String(200), nullable=False)
+#     feedback_type = Column(String(50))  # bug report, feature request, general
+#     message = Column(Text, nullable=False)
+#     created_at = Column(DateTime, default=datetime.datetime.utcnow)
+#     updated_at = Column(DateTime, default=datetime.datetime.utcnow, onupdate=datetime.datetime.utcnow)
