@@ -1,4 +1,4 @@
-# NSW Weather Data Visualization Dashboard
+Can y# NSW Weather Data Visualization Dashboard
 
 A comprehensive web application for visualizing and analyzing weather data from the Australian Bureau of Meteorology (BOM) and other sources.
 
@@ -181,6 +181,34 @@ API_PORT=8000
 ```bash
 docker-compose up -d
 ```
+
+### Publish Docker image to GitHub Container Registry (GHCR)
+
+This repository includes a GitHub Actions workflow that builds and publishes the Docker image to GitHub Container Registry on push to the `main` branch.
+
+1. Enable GitHub Packages/Container registry for your account or organization
+   - Go to `Settings -> Packages` and enable GitHub Packages if necessary.
+
+2. After pushing to `main`, the workflow will publish the image as:
+   - `ghcr.io/<your-github-username>/fit3164-dashboard:latest`
+   - `ghcr.io/<your-github-username>/fit3164-dashboard:<commit-sha>`
+
+3. To pull and run the image on macOS:
+
+```bash
+# Log in to GHCR (use a personal access token with `read:packages` scope)
+echo $CR_PAT | docker login ghcr.io -u <github-username> --password-stdin
+
+# Pull the published image
+docker pull ghcr.io/<github-username>/fit3164-dashboard:latest
+
+# Run the container (ensure Postgres/Redis are accessible)
+docker run -d -p 8000:8000 \
+  -e DATABASE_URL="postgresql://postgres:password@<postgres-host>:5432/weatherdb" \
+  ghcr.io/<github-username>/fit3164-dashboard:latest
+```
+
+Note: replace `<github-username>` and `<postgres-host>` as appropriate.
 
 ### Production Deployment
 ```bash
