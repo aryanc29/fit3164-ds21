@@ -3,10 +3,36 @@
 Verify and display the generated dummy data
 """
 
+# CODE REVIEW: dummy/verify_data.py - Data verification and reporting script
+# GOOD PRACTICES:
+# - Comprehensive data validation and reporting
+# - Includes spatial query testing with PostGIS
+# - Provides statistical analysis of weather data
+# - Exports sample data to JSON for external use
+# - Well-formatted console output with visual separators
+# - Tests database relationships and joins
+# - Includes coordinate extraction from PostGIS geometries
+# - Provides data distribution analysis by station
+# - Tests complex spatial queries (distance calculations)
+# IMPROVEMENTS:
+# - Could add data quality validation rules
+# - Could include performance benchmarks for queries
+# - Could add automated test assertions
+# - Could include data completeness checks
+# - Could add export to multiple formats (CSV, XML)
+# - Could include temporal analysis (trends, patterns)
+# - Could add geospatial analysis (clustering, density)
+# ARCHITECTURAL NOTES:
+# - Validates data integrity and relationships
+# - Tests spatial functionality critical for weather visualization
+# - Provides comprehensive reporting for development and debugging
+# - Supports data export for integration with frontend components
+# - Enables verification of data generation quality
+
 from sqlalchemy.orm import Session
 from sqlalchemy import func, text
-from src.database.connection import SessionLocal
-from src.api.models import WeatherStation, WeatherData
+from app.database.connection import SessionLocal
+from app.api.models import WeatherStation, WeatherData
 import json
 
 def display_weather_stations(db: Session):

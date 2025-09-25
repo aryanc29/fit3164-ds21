@@ -1,5 +1,26 @@
 name: Build and Publish Docker Image
 
+# CODE REVIEW: GitHub Actions workflow for automated Docker image building and publishing
+# GOOD PRACTICES:
+# - Uses latest action versions (checkout@v4, build-push-action@v5)
+# - Includes proper permissions for GitHub Container Registry
+# - Uses multi-platform build setup with QEMU and Buildx
+# - Tags images with both 'latest' and SHA for versioning
+# - Includes informative output with image info
+# - Triggers only on main branch pushes (good practice for production)
+# IMPROVEMENTS:
+# - Could add build caching to speed up builds
+# - Could add security scanning (trivy, snyk)
+# - Could add multi-architecture builds (amd64, arm64)
+# - Could add testing steps before publishing
+# - Could add deployment to staging/production environments
+# - Could add rollback capabilities
+# - Could add notifications on build success/failure
+# - Missing from project requirements: GitHub Actions CI/CD pipeline
+# ARCHITECTURAL NOTES:
+# - Aligns with Docker deployment requirement in project_req.json
+# - Uses GitHub Container Registry for container storage
+
 on:
   push:
     branches: [ main ]

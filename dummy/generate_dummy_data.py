@@ -1,16 +1,47 @@
 #!/usr/bin/env python3
 """
-Generate dummy weather data for the weather visualization project
+Generfrom sqlalchemy.orm import Session
+from sqlalchemy import func
+from geoalchemy2.functions import ST_GeomFromText
+from app.database.connection import SessionLocal, engine
+from app.api.models import WeatherStation, WeatherData, Base
+import osmmy weather data for the weather visualization project
 Creates realistic weather stations and weather data for testing
 """
+
+# CODE REVIEW: dummy/generate_dummy_data.py - Realistic dummy data generation script
+# GOOD PRACTICES:
+# - Generates geographically accurate Australian weather stations
+# - Uses seasonal temperature variations for realism
+# - Includes comprehensive weather parameters (temp, humidity, pressure, wind, precipitation)
+# - Uses PostGIS for spatial data storage
+# - Includes data quality scores and weather codes
+# - Handles duplicate data prevention
+# - Provides detailed progress reporting
+# - Uses proper database transactions and error handling
+# - Includes realistic weather descriptions based on conditions
+# - Generates time-series data with proper temporal distribution
+# IMPROVEMENTS:
+# - Could add more weather stations for better coverage
+# - Could include historical weather patterns
+# - Could add weather station metadata (equipment type, etc.)
+# - Could include data anomalies for testing data quality algorithms
+# - Could add configurable parameters for data generation
+# - Could include weather alerts and warnings
+# ARCHITECTURAL NOTES:
+# - Creates test data that matches production schema
+# - Enables development and testing without external data dependencies
+# - Supports spatial analysis testing with PostGIS
+# - Provides realistic data distribution for performance testing
+# - Aligns with BOM data structure for integration testing
 
 import random
 from datetime import datetime, timedelta
 from sqlalchemy.orm import Session
 from sqlalchemy import func
 from geoalchemy2.functions import ST_GeomFromText
-from src.database.connection import SessionLocal, engine
-from src.api.models import WeatherStation, WeatherData, Base
+from app.database.connection import SessionLocal, engine
+from app.api.models import WeatherStation, WeatherData, Base
 import os
 
 # Australian cities with coordinates for realistic data

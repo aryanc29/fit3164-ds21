@@ -4,15 +4,15 @@ Database initialization script
 Sets up PostGIS extension and creates initial schema
 """
 
-import psycopg2
+import pg8000
 import os
-from src.database.connection import engine, Base
+from app.database.connection import engine, Base
 
 def setup_postgis():
     """Set up PostGIS extension in the database"""
     try:
         # Connection parameters
-        db_url = os.getenv("DATABASE_URL", "postgresql://weather_user:weather_pass@localhost:5433/weather_db")
+        db_url = os.getenv("DATABASE_URL", "postgresql://postgres:password@localhost:5433/weatherdb")
         
         # Parse connection string
         if db_url.startswith("postgresql://"):
@@ -24,7 +24,7 @@ def setup_postgis():
             host, port = host_port.split(":")
             
             # Connect to database
-            conn = psycopg2.connect(
+            conn = pg8000.connect(
                 host=host,
                 port=int(port),
                 database=database,
@@ -61,10 +61,6 @@ def create_tables():
     """Create all database tables"""
     try:
         print("📋 Creating database tables...")
-        
-        # Import models to register them
-        import src.api.models
-        import src.database.models
         
         # Create all tables
         Base.metadata.create_all(bind=engine)

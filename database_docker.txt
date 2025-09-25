@@ -1,0 +1,8 @@
+docker exec -it weather_postgres psql -U postgres -d weatherdb
+
+#check for public tables: \dt public.*
+
+main table:
+bom_weather_data - all weather data records 
+bom_weather_stations - station data 
+feedback - save feedbacks 

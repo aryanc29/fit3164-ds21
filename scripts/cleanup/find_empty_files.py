@@ -4,6 +4,25 @@ Usage:
     python find_empty_files.py            # list empty files
     python find_empty_files.py --delete   # delete empty files (prompts for confirmation)
 """
+# CODE REVIEW: Python script for finding and optionally deleting empty files
+# GOOD PRACTICES:
+# - Uses pathlib for modern Python path handling
+# - Includes proper argument parsing with argparse
+# - Uses type hints for better code documentation
+# - Includes comprehensive docstring
+# - Handles exceptions during file deletion
+# - Uses strip().lower() for robust user input validation
+# - Provides clear feedback on operations
+# IMPROVEMENTS:
+# - Could add logging to file option
+# - Could add file size threshold parameter
+# - Could add file type filtering
+# - Could add dry-run mode
+# - Could add progress bar for large directories
+# RECENT FIXES:
+# - Removed problematic 'found' variable that was causing logic errors
+# - Fixed condition to properly check args.delete flag
+
 from pathlib import Path
 import argparse
 

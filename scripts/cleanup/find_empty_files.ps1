@@ -5,6 +5,21 @@ Usage:
   .\find_empty_files.ps1 -Delete   # delete empty files (prompts for confirmation)
 #>
 
+# CODE REVIEW: PowerShell script for finding and optionally deleting empty files
+# GOOD PRACTICES:
+# - Uses proper PowerShell parameter handling with [switch]$Delete
+# - Includes comprehensive help documentation
+# - Uses Write-Host with color coding for better UX
+# - Includes confirmation prompt before deletion
+# - Handles relative path resolution correctly
+# - Uses -Force flag for hidden files
+# - Provides clear feedback on operations
+# IMPROVEMENTS:
+# - Could add logging to file option
+# - Could add file size threshold parameter
+# - Could add file type filtering
+# - Could add dry-run mode
+
 param(
     [switch]$Delete
 )

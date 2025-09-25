@@ -3,10 +3,33 @@
 Database Demonstration Script
 Shows that our database is working with real data
 """
+# CODE REVIEW: dummy/demo_database.py - Database demonstration and validation script
+# GOOD PRACTICES:
+# - Comprehensive database functionality demonstration
+# - Uses async/await for database operations
+# - Includes spatial queries with PostGIS functions
+# - Provides detailed statistics and data summaries
+# - Well-structured with clear sections and visual formatting
+# - Includes error handling and proper resource cleanup
+# - Uses raw SQL for complex spatial queries
+# - Provides technical information about database versions
+# - Includes links to frontend and API documentation
+# IMPROVEMENTS:
+# - Could add performance metrics for queries
+# - Could include data validation checks
+# - Could add export functionality for reports
+# - Could include more advanced spatial analysis examples
+# - Could add configuration for different database connections
+# ARCHITECTURAL NOTES:
+# - Demonstrates full integration between database models and spatial queries
+# - Shows real-world usage patterns for weather data analysis
+# - Validates PostGIS spatial functionality
+# - Provides comprehensive overview of data distribution and quality
+
 import asyncio
 import json
-from src.database.connection import get_db
-from src.api.models import WeatherStation, WeatherData
+from app.database.connection import get_db
+from app.api.models import WeatherStation, WeatherData
 from sqlalchemy import func, text
 from datetime import datetime, timedelta
 

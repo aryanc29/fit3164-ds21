@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NSW Weather Analytics Dashboard</title>
+    
+    <!-- CSS Dependencies -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS (served at /static) -->
+    <link rel="stylesheet" href="/static/css/weather_visualization.css">
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="main-container">
+            <!-- Header Section -->
+            <div class="weather-header">
+                <h1><i class="fas fa-cloud-sun-rain"></i> NSW Weather Analytics</h1>
+                <p>Advanced Weather Intelligence Dashboard for New South Wales</p>
+                <div class="header-controls mt-3">
+                    <button id="refreshBtn" class="btn btn-light btn-sm me-2">
+                        <i class="fas fa-sync-alt"></i> Refresh Data
+                    </button>
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-outline-light btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-download"></i> Export
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><h6 class="dropdown-header">Charts as Images</h6></li>
+                            <li><a class="dropdown-item" href="#" onclick="exportChart('overview', 'png')"><i class="fas fa-image"></i> Overview Chart (PNG)</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="exportChart('temperature', 'png')"><i class="fas fa-image"></i> Temperature Chart (PNG)</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="exportChart('precipitation', 'png')"><i class="fas fa-image"></i> Precipitation Chart (PNG)</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="exportChart('wind', 'png')"><i class="fas fa-image"></i> Wind Charts (PNG)</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><h6 class="dropdown-header">All Charts</h6></li>
+                            <li><a class="dropdown-item" href="#" onclick="exportAllCharts('png')"><i class="fas fa-images"></i> All Charts (PNG)</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="exportDashboard('pdf')"><i class="fas fa-file-pdf"></i> Full Dashboard (PDF)</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><h6 class="dropdown-header">Data Export</h6></li>
+                            <li><a class="dropdown-item" href="#" onclick="exportData('excel')"><i class="fas fa-file-excel"></i> Data as Excel</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="exportData('csv')"><i class="fas fa-file-csv"></i> Data as CSV</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="exportData('json')"><i class="fas fa-file-code"></i> Raw Data (JSON)</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Loading State -->
+            <div id="loadingState" class="loading-spinner">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <p class="mt-3">Loading weather data...</p>
+            </div>
+
+            <!-- Error State -->
+            <div id="errorState" class="alert alert-danger alert-custom hidden-state">
+                <h4><i class="fas fa-exclamation-triangle"></i> Error Loading Data</h4>
+                <p>Unable to load weather data. Please check your connection and try again.</p>
+                <button id="retryBtn" class="btn btn-outline-danger">
+                    <i class="fas fa-redo"></i> Retry
+                </button>
+            </div>
+
+            <!-- Export Status Indicator -->
+            <div id="exportStatus" class="alert alert-info hidden-state">
+                <div class="d-flex align-items-center">
+                    <div class="spinner-border spinner-border-sm me-3" role="status">
+                        <span class="visually-hidden">Exporting...</span>
+                    </div>
+                    <div>
+                        <strong>Exporting data...</strong>
+                        <div id="exportProgress" class="text-muted small">Preparing export...</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div id="weatherTabContent" class="hidden-state">
+                <!-- Navigation Tabs -->
+                <ul class="nav nav-tabs" id="weatherTabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="overview-tab" data-bs-toggle="tab" data-bs-target="#overview" type="button" role="tab">
+                            <i class="fas fa-chart-line"></i> Overview
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="temperature-tab" data-bs-toggle="tab" data-bs-target="#temperature" type="button" role="tab">
+                            <i class="fas fa-thermometer-half"></i> Temperature
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="precipitation-tab" data-bs-toggle="tab" data-bs-target="#precipitation" type="button" role="tab">
+                            <i class="fas fa-cloud-rain"></i> Precipitation
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="wind-tab" data-bs-toggle="tab" data-bs-target="#wind" type="button" role="tab">
+                            <i class="fas fa-wind"></i> Wind
+                        </button>
+                    </li>
+                </ul>
+
+                <!-- Tab Content -->
+                <div class="tab-content" id="weatherTabsContent">
+                    <!-- Overview Tab -->
+                    <div class="tab-pane fade show active" id="overview" role="tabpanel">
+                        <div class="row">
+                            <!-- Weather Summary -->
+                            <div class="col-12">
+                                <div class="weather-summary">
+                                    <h4><i class="fas fa-info-circle"></i> Current Weather Summary</h4>
+                                    <div class="summary-grid">
+                                        <div class="summary-item">
+                                            <span class="icon">🌡️</span>
+                                            <span class="value" id="avgTemp">--°C</span>
+                                            <span class="label">Average Temperature</span>
+                                        </div>
+                                        <div class="summary-item">
+                                            <span class="icon">💧</span>
+                                            <span class="value" id="avgHumidity">--%</span>
+                                            <span class="label">Average Humidity</span>
+                                        </div>
+                                        <div class="summary-item">
+                                            <span class="icon">💨</span>
+                                            <span class="value" id="avgWind">-- km/h</span>
+                                            <span class="label">Average Wind Speed</span>
+                                        </div>
+                                        <div class="summary-item">
+                                            <span class="icon">📊</span>
+                                            <span class="value" id="avgPressure">-- hPa</span>
+                                            <span class="label">Average Pressure</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Quick Stats -->
+                            <div class="col-12">
+                                <div class="quick-stats">
+                                    <h4><i class="fas fa-tachometer-alt"></i> Quick Statistics</h4>
+                                    <div class="row">
+                                        <div class="col-md-4 col-sm-6">
+                                            <div class="stat-item">
+                                                <span class="stat-number" id="stationCount">0</span>
+                                                <span class="stat-text">Weather Stations</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-sm-6">
+                                            <div class="stat-item">
+                                                <span class="stat-number" id="dataPoints">0</span>
+                                                <span class="stat-text">Data Points</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-sm-6">
+                                            <div class="stat-item">
+                                                <span class="stat-number" id="lastUpdate">--</span>
+                                                <span class="stat-text">Last Updated</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Overview Chart -->
+                            <div class="col-12">
+                                <div class="chart-container">
+                                    <h4><i class="fas fa-chart-area"></i> Temperature & Humidity Overview</h4>
+                                    <canvas id="overviewChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Temperature Tab -->
+                    <div class="tab-pane fade" id="temperature" role="tabpanel">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="chart-container">
+                                    <h4><i class="fas fa-chart-bar"></i> Temperature Distribution</h4>
+                                    <canvas id="temperatureChart"></canvas>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="chart-container">
+                                    <h4><i class="fas fa-chart-line"></i> Temperature Extremes</h4>
+                                    <canvas id="tempExtremesChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Precipitation Tab -->
+                    <div class="tab-pane fade" id="precipitation" role="tabpanel">
+                        <div class="row">
+                            <!-- Rainfall Metrics -->
+                            <div class="col-12">
+                                <div class="stats-card">
+                                    <h3><i class="fas fa-tint"></i> Rainfall Metrics</h3>
+                                    <div class="row">
+                                        <div class="col-md-3 col-sm-6">
+                                            <div class="stat-item">
+                                                <span class="stat-number" id="totalRainfall">--</span>
+                                                <span class="stat-text">Total Rainfall</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 col-sm-6">
+                                            <div class="stat-item">
+                                                <span class="stat-number" id="maxDailyRain">--</span>
+                                                <span class="stat-text">Max Daily Rain</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 col-sm-6">
+                                            <div class="stat-item">
+                                                <span class="stat-number" id="rainyDays">--</span>
+                                                <span class="stat-text">Rainy Days</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 col-sm-6">
+                                            <div class="stat-item">
+                                                <span class="stat-number" id="drySpell">--</span>
+                                                <span class="stat-text">Longest Dry Spell</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Precipitation Chart -->
+                            <div class="col-12">
+                                <div class="chart-container">
+                                    <h4><i class="fas fa-cloud-rain"></i> Precipitation Analysis</h4>
+                                    <canvas id="precipitationChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Wind Tab -->
+                    <div class="tab-pane fade" id="wind" role="tabpanel">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="chart-container">
+                                    <h4><i class="fas fa-chart-line"></i> Wind Speed</h4>
+                                    <canvas id="windSpeedChart"></canvas>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="chart-container">
+                                    <h4><i class="fas fa-compass"></i> Wind Direction</h4>
+                                    <canvas id="windDirectionChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Chart.js (CDN) -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    
+    <!-- Export Libraries -->
+    <!-- SheetJS for Excel/CSV export -->
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
+    <!-- jsPDF for PDF export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <!-- html2canvas for chart to image conversion -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    
+    <!-- Custom JavaScript -->
+    <script src="/static/js/weather_visualization.js"></script>
+</body>
+</html>
