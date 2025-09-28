@@ -72,6 +72,14 @@ async def weather_visualization():
         return FileResponse(str(viz_path))
     return {"message": "Weather visualization not found", "status": "error"}
 
+@app.get("/index")
+async def test_index():
+    """Test index endpoint"""
+    index_path = Path(__file__).parent / "static" / "index.html"
+    if index_path.exists():
+        return FileResponse(str(index_path))
+    return {"message": "Index page not found", "status": "error"}
+
 @app.get("/analysis")
 async def weather_analysis():
     """Alias for weather visualization page"""
