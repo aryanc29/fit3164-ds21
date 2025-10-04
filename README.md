@@ -64,6 +64,83 @@ A comprehensive web application for visualizing and analyzing weather data from 
 - PostgreSQL with PostGIS extension
 - Docker (optional, for containerized deployment)
 
+### macOS (Homebrew) quick setup
+
+If you're running the project on macOS the following steps will get you up and running quickly. These instructions work for both Intel and Apple Silicon (M1/M2) Macs. You can either install services natively via Homebrew or use Docker containers.
+
+1. Install Homebrew (if you don't have it):
+
+```bash
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
+
+2. Install Python 3.11 and create a virtual environment:
+
+```bash
+brew update
+brew install python@3.11
+# Ensure the brew python is on your PATH (Apple Silicon installs to /opt/homebrew)
+export PATH="/opt/homebrew/bin:$PATH"  # Add to your shell profile if needed
+
+python3.11 -m venv .venv
+source .venv/bin/activate
+pip install --upgrade pip
+```
+
+3. Install PostgreSQL + PostGIS (native via Homebrew) OR use Docker (recommended to avoid local DB conflicts):
+
+Option A — Homebrew (native):
+
+```bash
+brew install postgresql@14 postgis
+brew services start postgresql@14
+
+# Create database and enable PostGIS
+createdb weatherdb
+psql -d weatherdb -c "CREATE EXTENSION postgis; CREATE EXTENSION postgis_topology;"
+```
+
+Option B — Docker (recommended if you prefer isolation):
+
+```bash
+docker run -d --name weather-postgres -p 5432:5432 \
+   -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=weatherdb postgis/postgis
+```
+
+4. Configure environment variables
+
+```bash
+cp config/.env.example config/.env
+# Edit config/.env and set DATABASE_URL for your local DB; example for native Postgres:
+# DATABASE_URL=postgresql://postgres:postgres@localhost:5432/weatherdb
+```
+
+5. Install Python dependencies and initialize the project
+
+```bash
+# With your virtualenv activated
+pip install -r requirements.txt
+
+# Initialize database or run any project init scripts if provided
+python src/database/connection.py || python init_db.py || echo "Run your DB init script"
+```
+
+6. Run the development server
+
+```bash
+# Option 1 - project start script
+python start_server.py
+
+# Option 2 - uvicorn directly
+uvicorn src.api.main:app --host 0.0.0.0 --port 8000 --reload
+```
+
+Notes for Apple Silicon (M1/M2):
+- Homebrew installs to `/opt/homebrew` on Apple Silicon — make sure `/opt/homebrew/bin` is on your PATH before running `python3.11`.
+- If you encounter brew formula compatibility issues for PostGIS, prefer the Docker `postgis/postgis` image which works across architectures.
+- If services are already running on port 5432, either stop them or change the Postgres port in your `config/.env`.
+
+
 ### Installation
 
 1. **Clone the repository**
