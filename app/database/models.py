@@ -9,6 +9,8 @@ from sqlalchemy.orm import relationship
 from geoalchemy2 import Geometry
 from app.database.connection import Base
 import datetime
+from sqlalchemy import Column, Integer, String, Boolean
+from app.database.connection import Base
 
 class BOMWeatherStation(Base):
     """Extended weather station model for BOM data"""
@@ -125,3 +127,12 @@ class Feedback(Base):
     message = Column(Text, nullable=False)
     created_at = Column(DateTime, default=datetime.datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.datetime.utcnow, onupdate=datetime.datetime.utcnow)
+
+class User(Base):
+    __tablename__ = "users"
+
+    id = Column(Integer, primary_key=True, index=True)
+    email = Column(String, unique=True, index=True, nullable=False)
+    password_hash = Column(String, nullable=False)
+    otp_secret = Column(String, nullable=True)  
+    is_verified = Column(Boolean, default=False) 
