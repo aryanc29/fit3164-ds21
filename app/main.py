@@ -9,6 +9,17 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 import os
 from pathlib import Path
+from fastapi import FastAPI
+from app.auth import auth_routes 
+
+app = FastAPI()
+
+app.include_router(auth_routes.router)
+
+@app.get("/")
+def root():
+    return {"message": "Weather Visualization + 2FA API Running"}
+
 
 # Import API routes
 try:
