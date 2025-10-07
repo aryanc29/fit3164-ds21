@@ -24,3 +24,6 @@ structlog==23.2.0
 # Spatial data processing
 shapely==2.0.2
 geojson==3.1.0
+
+# 2FA
+pyotp==2.9.0
