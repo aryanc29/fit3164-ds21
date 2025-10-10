@@ -5,6 +5,7 @@ NSW Weather Dashboard - FastAPI Application
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from app.api.download_routes import router as download_router
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 import os
@@ -15,6 +16,7 @@ from app.auth import auth_routes
 app = FastAPI()
 
 app.include_router(auth_routes.router)
+app.include_router(download_router)
 
 @app.get("/")
 def root():
