@@ -1,29 +1,9 @@
 name: Build and Publish Docker Image
 
-# CODE REVIEW: GitHub Actions workflow for automated Docker image building and publishing
-# GOOD PRACTICES:
-# - Uses latest action versions (checkout@v4, build-push-action@v5)
-# - Includes proper permissions for GitHub Container Registry
-# - Uses multi-platform build setup with QEMU and Buildx
-# - Tags images with both 'latest' and SHA for versioning
-# - Includes informative output with image info
-# - Triggers only on main branch pushes (good practice for production)
-# IMPROVEMENTS:
-# - Could add build caching to speed up builds
-# - Could add security scanning (trivy, snyk)
-# - Could add multi-architecture builds (amd64, arm64)
-# - Could add testing steps before publishing
-# - Could add deployment to staging/production environments
-# - Could add rollback capabilities
-# - Could add notifications on build success/failure
-# - Missing from project requirements: GitHub Actions CI/CD pipeline
-# ARCHITECTURAL NOTES:
-# - Aligns with Docker deployment requirement in project_req.json
-# - Uses GitHub Container Registry for container storage
-
 on:
   push:
     branches: [ main ]
+  workflow_dispatch:
 
 jobs:
   build-and-publish:
@@ -34,32 +14,47 @@ jobs:
       id-token: write
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-    - name: Set up QEMU
-      uses: docker/setup-qemu-action@v2
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
 
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v2
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
 
-    - name: Log in to GitHub Container Registry
-      uses: docker/login-action@v2
-      with:
-        registry: ghcr.io
-        username: ${{ github.repository_owner }}
-        password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Build and push Docker image
-      uses: docker/build-push-action@v5
-      with:
-        context: .
-        file: ./Dockerfile
-        push: true
-        tags: |
-          ghcr.io/${{ github.repository_owner }}/fit3164-dashboard:latest
-          ghcr.io/${{ github.repository_owner }}/fit3164-dashboard:${{ github.sha }}
+      # —— 调试构建上下文（关键）——
+      - name: Debug build context
+        run: |
+          echo "GITHUB_WORKSPACE: $GITHUB_WORKSPACE"
+          ls -la
+          echo "--- .dockerignore ---"
+          [ -f .dockerignore ] && cat .dockerignore || echo "(no .dockerignore)"
+          echo "--- existence check ---"
+          [ -d src ] && echo "src exists" || echo "src MISSING"
+          [ -d frontend ] && echo "frontend exists" || echo "frontend MISSING"
+          [ -d config ] && echo "config exists" || echo "config MISSING"
 
-    - name: Image info
-      run: |
-        echo "Image published to ghcr.io/${{ github.repository_owner }}/fit3164-dashboard:latest"
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .             # 根目录作为 Build Context
+          file: ./Dockerfile     # Dockerfile 在根目录
+          push: true
+          tags: |
+            ghcr.io/${{ github.repository_owner }}/fit3164-dashboard:latest
+            ghcr.io/${{ github.repository_owner }}/fit3164-dashboard:${{ github.sha }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Image info
+        run: |
+          echo "✅ Image published: ghcr.io/${{ github.repository_owner }}/fit3164-dashboard:latest"
+
