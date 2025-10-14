@@ -31,3 +31,7 @@ pyotp==2.9.0
 # export images
 reportlab==4.2.2
 
+# AI/LLM Integration
+google-generativeai==0.3.2
+
+
