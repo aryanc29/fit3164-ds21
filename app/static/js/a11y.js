@@ -53,8 +53,10 @@
     if (colour) colour.addEventListener("change", () => {
       const name = colour.value;
       const pal = CB_PALETTES[name] || CB_PALETTES.Viridis;
+      // Recolour charts or heat layer if present
       if (window.rebuildChartsWithPalette) window.rebuildChartsWithPalette(name, pal);
       if (window.updateHeatGradient) window.updateHeatGradient(paletteToGradient(pal));
+      if (window.updateMarkersPalette) window.updateMarkersPalette(name, pal); // recolour station markers
     });
     if (dark) dark.addEventListener("change", () => applyTheme(dark.checked));
     if (motion) motion.addEventListener("change", () => {
@@ -67,6 +69,6 @@
     refreshCaption();
   }
 
-  // Expose tiny API for your existing code to hook into
+  // Expose tiny API for other scripts
   window.A11Y = { initControls, CB_PALETTES, paletteToGradient };
 })();

@@ -43,6 +43,24 @@ window.addEventListener('error', function(e) {
     console.error('JavaScript error:', e.error);
 });
 
+// Palette + marker state
+let stationMarkers = []; // [{ marker, value }]
+function getSelectedPaletteName() {
+  const el = document.getElementById('colour-scale');
+  return el && el.value ? el.value : 'Viridis';
+}
+function getPaletteArray(name) {
+  const fallback = ["#440154","#3b528b","#21918c","#5ec962","#fde725"]; // Viridis
+  if (window.A11Y && A11Y.CB_PALETTES && A11Y.CB_PALETTES[name]) return A11Y.CB_PALETTES[name];
+  return fallback;
+}
+function colourFromPalette(pal, t) {
+  const clamped = Math.max(0, Math.min(1, t));
+  const idx = Math.round(clamped * (pal.length - 1));
+  return pal[idx];
+}
+
+
 document.addEventListener('DOMContentLoaded', () => {
     loadStatistics();
     loadStations();
@@ -81,6 +99,9 @@ function initializeMap() {
 	
 	// Create layer groups
 	markersLayer = L.layerGroup().addTo(weatherMap);
+
+    window.weatherMap = weatherMap;         // NEW
+    window.markersLayer = markersLayer;     // NEW
 	
 	// Add layer control
 	const baseLayers = {
@@ -103,36 +124,74 @@ function initializeMap() {
 }
 
 async function loadStationsOnMap() {
-	try {
-		// Clear existing markers
-		if (markersLayer) {
-			markersLayer.clearLayers();
-		}
-		
-		const resp = await fetch(`${API_BASE}/bom/stations`);
-		if (!resp.ok) throw new Error('Failed to load stations for map');
-		const stations = await resp.json();
-		
-		stations.forEach(station => {
-			if (station.latitude && station.longitude) {
-				const marker = L.marker([station.latitude, station.longitude]);
-				
-				// Create popup content
-				const popupContent = `
-					<div class="popup-station-name">${station.station_name}</div>
-					<div><strong>Records:</strong> ${(station.record_count || 0).toLocaleString()}</div>
-					<div><strong>State:</strong> ${station.state || 'N/A'}</div>
-					<div><strong>Avg ET:</strong> ${station.avg_evapotranspiration ? station.avg_evapotranspiration.toFixed(2) + ' mm' : 'N/A'}</div>
-				`;
-				
-				marker.bindPopup(popupContent);
-				markersLayer.addLayer(marker);
-			}
-		});
-	} catch (err) {
-		console.error('Failed to load stations on map:', err);
-	}
+  try {
+    // Clear existing layers and state
+    if (markersLayer) markersLayer.clearLayers();
+    stationMarkers = [];
+
+    // Which metric is currently selected
+    const metric = document.getElementById('mapMetric')?.value || 'record_count';
+
+    const resp = await fetch(`${API_BASE}/bom/stations`);
+    if (!resp.ok) throw new Error('Failed to load stations for map');
+    const stations = await resp.json();
+
+    // Compute min/max for normalisation
+    const values = [];
+    stations.forEach(s => {
+      const v = metric === 'record_count'
+        ? (s.record_count ?? 0)
+        : metric === 'avg_rainfall'
+          ? (s.avg_rainfall ?? 0)
+          : (s.avg_evapotranspiration ?? 0);
+      if (Number.isFinite(v)) values.push(Number(v));
+    });
+    const vmin = values.length ? Math.min(...values) : 0;
+    const vmax = values.length ? Math.max(...values) : 1;
+    const range = (vmax - vmin) || 1;
+
+    // Current palette
+    const pal = getPaletteArray(getSelectedPaletteName());
+
+    stations.forEach(station => {
+      if (station.latitude && station.longitude) {
+        const value = metric === 'record_count'
+          ? (station.record_count ?? 0)
+          : metric === 'avg_rainfall'
+            ? (station.avg_rainfall ?? 0)
+            : (station.avg_evapotranspiration ?? 0);
+
+        const t = (Number(value) - vmin) / range;
+        const col = colourFromPalette(pal, t);
+
+        // Circle markers are styleable; default pin icons are not
+        const marker = L.circleMarker([station.latitude, station.longitude], {
+          color: col,
+          fillColor: col,
+          fillOpacity: 0.9,
+          radius: 7,
+          weight: 1.5
+        });
+
+        const popupContent = `
+          <div class="popup-station-name">${station.station_name ?? 'Station'}</div>
+          <div><strong>Records:</strong> ${(station.record_count ?? 0).toLocaleString()}</div>
+          <div><strong>State:</strong> ${station.state ?? 'N/A'}</div>
+          <div><strong>Avg ET:</strong> ${Number(station.avg_evapotranspiration ?? NaN).toFixed(2)} mm</div>
+        `;
+        marker.bindPopup(popupContent);
+        markersLayer.addLayer(marker);
+
+        // Keep for live recolouring
+        stationMarkers.push({ marker, value: Number(value), lat: station.latitude, lon: station.longitude });
+      }
+    });
+
+  } catch (err) {
+    console.error('Failed to load stations on map:', err);
+  }
 }
+
 
 function updateMap() {
 	const selectedMetric = document.getElementById('mapMetric')?.value;
@@ -223,44 +282,43 @@ function getHeatmapColor(value, variable = 'temperature') {
 function updateHeatmapLayer(data, variable = 'temperature') {
     // Remove existing heatmap layer
     if (heatmapLayer) {
+        if (heatmapLayer.dataMarkers) {
+            weatherMap.removeLayer(heatmapLayer.dataMarkers);
+        }
         weatherMap.removeLayer(heatmapLayer);
         heatmapLayer = null;
     }
-    
-    if (!data || data.length === 0) {
-        return;
-    }
-    
+
+    if (!data || data.length === 0) return;
+
     const heatmapData = createHeatmapData(data, variable);
-    
-    // Create heatmap layer using Leaflet.heat plugin
-    const heatPoints = heatmapData.map(point => [
-        point.lat,
-        point.lng,
-        point.value
-    ]);
-    
+
+    // Compute range for normalisation (for marker colours)
+    const values = heatmapData.map(p => p.value).filter(v => Number.isFinite(v));
+    const vmin = Math.min(...values);
+    const vmax = Math.max(...values);
+    const range = (vmax - vmin) || 1;
+
+    // Heat layer using the selected palette
+    const gradient = createHeatmapGradient(variable);
+    const heatPoints = heatmapData.map(point => [point.lat, point.lng, point.value]);
     heatmapLayer = L.heatLayer(heatPoints, {
         radius: 25,
         blur: 15,
         maxZoom: 10,
-        max: Math.max(...heatmapData.map(p => p.value)),
-        gradient: createHeatmapGradient(variable)
+        max: vmax,
+        gradient: gradient
     }).addTo(weatherMap);
-    
-    // Add custom markers for each data point with color coding
+
+    // Data markers: colour from palette rather than fixed thresholds
+    const pal = getPaletteArray(getSelectedPaletteName());
     const dataMarkers = L.layerGroup();
-    
     heatmapData.forEach(point => {
-        const color = getHeatmapColor(point.value, variable);
+        const t = (point.value - vmin) / range; // 0..1
+        const col = colourFromPalette(pal, t);
         const marker = L.circleMarker([point.lat, point.lng], {
-            color: color,
-            fillColor: color,
-            fillOpacity: 0.8,
-            radius: 8,
-            weight: 2
+            color: col, fillColor: col, fillOpacity: 0.85, radius: 8, weight: 2
         });
-        
         const popupContent = `
             <div class="heatmap-popup">
                 <h6>${point.location || 'Location'}</h6>
@@ -269,48 +327,21 @@ function updateHeatmapLayer(data, variable = 'temperature') {
                 <div><strong>Coordinates:</strong> ${point.lat.toFixed(4)}, ${point.lng.toFixed(4)}</div>
             </div>
         `;
-        
         marker.bindPopup(popupContent);
         dataMarkers.addLayer(marker);
     });
-    
-    // Add data markers to map
+
     dataMarkers.addTo(weatherMap);
-    
-    // Store reference for cleanup
     heatmapLayer.dataMarkers = dataMarkers;
 }
 
+
 function createHeatmapGradient(variable = 'temperature') {
-    const gradients = {
-        temperature: {
-            0.0: '#0000ff',   // Very cold
-            0.2: '#0080ff',   // Cold
-            0.4: '#00ffff',   // Cool
-            0.6: '#80ff80',   // Mild
-            0.8: '#ffff00',   // Warm
-            1.0: '#ff0000'    // Very hot
-        },
-        rainfall: {
-            0.0: '#ffffff',   // No rain
-            0.2: '#e6f3ff',   // Light rain
-            0.4: '#b3d9ff',   // Moderate rain
-            0.6: '#80bfff',   // Heavy rain
-            0.8: '#4d94ff',   // Very heavy
-            1.0: '#004080'    // Torrential
-        },
-        humidity: {
-            0.0: '#ffcccc',   // Very dry
-            0.2: '#ff9999',   // Dry
-            0.4: '#ff6666',   // Moderate
-            0.6: '#ffff99',   // Comfortable
-            0.8: '#99ff99',   // Humid
-            1.0: '#339933'    // Extremely humid
-        }
-    };
-    
-    return gradients[variable] || gradients.temperature;
+    // Ignore 'variable' and use the user-selected colour-blind-safe palette
+    const pal = getPaletteArray(getSelectedPaletteName());
+    return paletteToGradient(pal);
 }
+
 
 function clearHeatmapLayer() {
     if (heatmapLayer) {
@@ -339,7 +370,28 @@ function updateMapWithFilteredData(data, variable = 'temperature') {
         console.warn('No geolocated data found for map visualization');
         return;
     }
-    
+    // --- Palette helpers (use values from A11Y if available) ---
+function getSelectedPaletteName() {
+  const el = document.getElementById('colour-scale');
+  return el && el.value ? el.value : 'Viridis';
+}
+function getPaletteArray(name) {
+  const fallback = ["#440154","#3b528b","#21918c","#5ec962","#fde725"]; // Viridis
+  if (window.A11Y && A11Y.CB_PALETTES && A11Y.CB_PALETTES[name]) return A11Y.CB_PALETTES[name];
+  return fallback;
+}
+function paletteToGradient(pal) {
+  const g = {};
+  pal.forEach((c, i) => { g[(i/(pal.length-1)).toFixed(2)] = c; });
+  return g;
+}
+function colourFromPalette(pal, t) {
+  // t in [0,1] -> nearest colour in the palette
+  if (!pal || pal.length === 0) return "#cccccc";
+  const idx = Math.max(0, Math.min(pal.length - 1, Math.round(t * (pal.length - 1))));
+  return pal[idx];
+}
+
     // Update heatmap layer
     updateHeatmapLayer(geoData, variable);
     

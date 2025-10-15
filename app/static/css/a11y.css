@@ -5,27 +5,43 @@
 }
 .skip-link:focus { left: 0.5rem; top: 0.5rem; outline: 3px solid #1a73e8; }
 
-/* Clear, visible keyboard focus */
+/* Visible keyboard focus */
 :focus { outline: 3px solid #1a73e8; outline-offset: 2px; }
 
-/* Minimum hit-target sizes */
+/* Larger hit targets */
 button, .btn, .form-select, .form-check-input, .leaflet-control-zoom a { min-height: 44px; min-width: 44px; }
 
-/* High-contrast theme */
+/* Theme tokens */
 :root { --bg: #ffffff; --fg: #111111; --grid: #dddddd; }
 body.theme-dark-high-contrast { --bg: #000000; --fg: #ffffff; --grid: #444444; }
 body { background: var(--bg); color: var(--fg); }
 
-/* Map container border */
-#weatherMap, .map-container { border: 1px solid var(--grid); border-radius: 8px; }
+/* High-contrast dark: keep Bootstrap components readable */
+body.theme-dark-high-contrast .navbar { background-color:#0d6efd !important; }
+body.theme-dark-high-contrast .card { background:#111 !important; color:#fff !important; border-color:#888 !important; }
+body.theme-dark-high-contrast .card .text-muted { color:#cfcfcf !important; }
+body.theme-dark-high-contrast .form-control,
+body.theme-dark-high-contrast .form-select,
+body.theme-dark-high-contrast .list-group-item {
+  background:#000 !important; color:#fff !important; border-color:#888 !important;
+}
+body.theme-dark-high-contrast .list-group-item {
+  --bs-list-group-bg:#000; --bs-list-group-border-color:#888;
+}
+body.theme-dark-high-contrast .btn-light { background:#222 !important; color:#fff !important; border-color:#888 !important; }
+body.theme-dark-high-contrast .btn-outline-secondary { color:#fff !important; border-color:#aaa !important; }
+body.theme-dark-high-contrast .table {
+  --bs-table-bg:#000; --bs-table-striped-bg:#0a0a0a; --bs-table-color:#fff;
+}
+.map-container, #weatherMap { border: 1px solid var(--grid); border-radius: 8px; }
 
-/* Visually hidden content maintained for screen readers */
+/* Visually hidden for screen readers */
 .visually-hidden {
   position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
   overflow: hidden; clip: rect(0,0,0,0); border: 0;
 }
 
-/* Caption styling */
+/* Caption */
 .caption { font-size: 1rem; margin-top: 0.5rem; }
 
 /* Reduced motion */

@@ -93,9 +93,7 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <div id="searchResultsContent">
-                        <!-- Results will be populated here -->
-                    </div>
+                    <div id="searchResultsContent"><!-- results --></div>
                 </div>
             </div>
         </div>
@@ -215,10 +213,16 @@
     <!-- External scripts -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <!-- If you use a heat layer, include the plugin -->
+    <script src="https://unpkg.com/leaflet.heat/dist/leaflet-heat.js"></script>
 
-    <!-- Accessibility helpers must load before your app JS -->
-    <script src="/static/js/a11y.js"></script>
-    <!-- Your app JS -->
+    <!-- Accessibility helpers -->
+    <script src="/static/js/a11y.js?v=1"></script>
+
+    <!-- Your existing app logic -->
     <script src="/static/js/dashboard.js?v=1"></script>
+
+    <!-- Palette-aware markers (recolours markers with the selected palette) -->
+    <script src="/static/js/a11y-markers.js?v=1"></script>
 </body>
 </html>
