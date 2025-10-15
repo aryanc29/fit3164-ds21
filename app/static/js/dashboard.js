@@ -50,7 +50,25 @@ document.addEventListener('DOMContentLoaded', () => {
     initializeSearch();
     initializeFeedback();
     initializeFiltering();
+
+    // A11y: initialise controls and sync with map/charts
+    if (window.A11Y && typeof window.A11Y.initControls === "function") {
+        window.A11Y.initControls();
+    }
+    // If the map is ready, apply reduced-motion flags immediately
+    try {
+        const reduced = document.body.classList.contains("prefers-reduced-motion");
+        if (typeof window.applyReducedMotionToMap === "function") {
+            window.applyReducedMotionToMap(reduced);
+        }
+    } catch (e) {
+        console.debug("A11y map motion init skipped:", e);
+    }
+
+    // Prepare a place to store any Chart.js instances you create later
+    if (!window.myCharts) window.myCharts = [];
 });
+
 
 function initializeMap() {
 	// Initialize the Leaflet map centered on NSW, Australia
@@ -1308,3 +1326,55 @@ async function exportFilteredData() {
     document.body.removeChild(link);
 }
 
+// -------------------- A11Y HOOKS (APPENDED) --------------------
+
+// Let the a11y panel toggle Leaflet animations
+window.applyReducedMotionToMap = function (reduced) {
+    try {
+        if (!window.weatherMap) return;
+        window.weatherMap.options.zoomAnimation = !reduced;
+        window.weatherMap.options.fadeAnimation = !reduced;
+        window.weatherMap.options.markerZoomAnimation = !reduced;
+    } catch (e) {
+        console.debug("applyReducedMotionToMap skipped:", e);
+    }
+};
+
+// Allow palette swap to recolour any Chart.js charts you create
+window.rebuildChartsWithPalette = function (name, palette) {
+    if (!window.myCharts) return;
+    const animation = document.body.classList.contains("prefers-reduced-motion") ? false : { duration: 400 };
+    window.myCharts.forEach(ch => {
+        try {
+            ch.options.animation = animation;
+            ch.data.datasets.forEach((ds, i) => {
+                const c = palette[i % palette.length];
+                ds.borderColor = c;
+                ds.backgroundColor = c;
+            });
+            ch.update();
+        } catch (e) { /* ignore */ }
+    });
+};
+
+// Toggle reduced motion on all charts at once
+window.applyReducedMotionToCharts = function (reduced) {
+    if (!window.myCharts) return;
+    window.myCharts.forEach(ch => {
+        try {
+            ch.options.animation = reduced ? false : { duration: 400 };
+            ch.update();
+        } catch (e) { /* ignore */ }
+    });
+};
+
+// If using Leaflet.heat, update its gradient from the chosen palette
+window.updateHeatGradient = function (gradientObj) {
+    try {
+        if (window.heatmapLayer && typeof window.heatmapLayer.setOptions === "function") {
+            window.heatmapLayer.setOptions({ gradient: gradientObj });
+        }
+    } catch (e) {
+        console.debug("updateHeatGradient skipped:", e);
+    }
+};

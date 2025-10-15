@@ -1,0 +1,32 @@
+/* Skip link */
+.skip-link {
+  position: absolute; left: -999px; top: 0;
+  background: #ffffff; color: #000000; padding: 0.5rem 1rem; z-index: 10000;
+}
+.skip-link:focus { left: 0.5rem; top: 0.5rem; outline: 3px solid #1a73e8; }
+
+/* Clear, visible keyboard focus */
+:focus { outline: 3px solid #1a73e8; outline-offset: 2px; }
+
+/* Minimum hit-target sizes */
+button, .btn, .form-select, .form-check-input, .leaflet-control-zoom a { min-height: 44px; min-width: 44px; }
+
+/* High-contrast theme */
+:root { --bg: #ffffff; --fg: #111111; --grid: #dddddd; }
+body.theme-dark-high-contrast { --bg: #000000; --fg: #ffffff; --grid: #444444; }
+body { background: var(--bg); color: var(--fg); }
+
+/* Map container border */
+#weatherMap, .map-container { border: 1px solid var(--grid); border-radius: 8px; }
+
+/* Visually hidden content maintained for screen readers */
+.visually-hidden {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0,0,0,0); border: 0;
+}
+
+/* Caption styling */
+.caption { font-size: 1rem; margin-top: 0.5rem; }
+
+/* Reduced motion */
+body.prefers-reduced-motion * { transition: none !important; animation: none !important; }

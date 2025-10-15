@@ -3,119 +3,132 @@
 NSW Weather Dashboard - FastAPI Application
 """
 
-from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
-from app.api.download_routes import router as download_router
-from fastapi.staticfiles import StaticFiles
-from fastapi.responses import FileResponse
-import os
 from pathlib import Path
 from fastapi import FastAPI
-from app.auth import auth_routes 
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 
-# Load environment variables from .env file
+# Optional env loading
 try:
     from dotenv import load_dotenv
-    env_file = Path(__file__).parent.parent / '.env'
+    env_file = Path(__file__).parent.parent / ".env"
+    if not env_file.exists():
+        env_file = Path(__file__).parent.parent / "config" / ".env"
     if env_file.exists():
         load_dotenv(env_file)
         print(f"✓ Loaded environment from: {env_file}")
-    else:
-        # Try config/.env
-        env_file = Path(__file__).parent.parent / 'config' / '.env'
-        if env_file.exists():
-            load_dotenv(env_file)
-            print(f"✓ Loaded environment from: {env_file}")
 except ImportError:
     print("Note: python-dotenv not installed. Using system environment variables only.")
-    
-app = FastAPI()
 
-app.include_router(auth_routes.router)
-app.include_router(download_router)
+# Routers (import after app creation is fine, but do not recreate app later)
+try:
+    from app.api.download_routes import router as download_router
+except Exception as e:
+    print(f"Warning: Could not import download_routes: {e}")
+    download_router = None
 
-@app.get("/")
-def root():
-    return {"message": "Weather Visualization + 2FA API Running"}
-
-
-# Import API routes
 try:
     from app.api.api_routes import router as api_router
-except ImportError:
-    print("Warning: Could not import API routes")
+except Exception as e:
+    print(f"Warning: Could not import api_routes: {e}")
     api_router = None
 
-# Create FastAPI app
+try:
+    from app.auth import auth_routes
+except Exception as e:
+    print(f"Warning: Could not import auth_routes: {e}")
+    auth_routes = None
+
+# Create FastAPI app (once)
 app = FastAPI(
     title="NSW Weather Dashboard",
     description="Weather monitoring and analysis dashboard for NSW, Australia",
-    version="1.0.0"
+    version="1.0.0",
 )
 
-# Configure CORS
+# CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # In production, specify exact origins
+    allow_origins=["*"],  # tighten in production
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# Mount static files
+# Static files
 static_path = Path(__file__).parent / "static"
 if static_path.exists():
     app.mount("/static", StaticFiles(directory=str(static_path)), name="static")
 
-# Include API routes if available
+# Routers
+if auth_routes:
+    app.include_router(auth_routes.router)
+if download_router:
+    app.include_router(download_router)
 if api_router:
-    # Include API routes
     app.include_router(api_router, prefix="/api")
 
+# ---- A11y summary endpoint (used by caption + TTS) ----
+@app.get("/summary")
+async def summary():
+    """
+    Returns a short text summary for screen readers and users who prefer text.
+    Replace the stub with live stats once available.
+    """
+    return {
+        "text": (
+            "This dashboard displays a map of NSW weather stations with an optional heat layer. "
+            "Use the accessibility panel to choose a colour-blind-friendly palette, enable high-contrast dark mode, "
+            "reduce motion and adjust text size. All controls are keyboard accessible."
+        )
+    }
+
+# ---- Page routes ----
 @app.get("/")
 async def root():
     """Root endpoint - serve dashboard"""
-    dashboard_path = Path(__file__).parent / "static" / "dashboard.html"
+    dashboard_path = static_path / "dashboard.html"
     if dashboard_path.exists():
         return FileResponse(str(dashboard_path))
     return {"message": "NSW Weather Dashboard API", "status": "running"}
 
-@app.get("/health")
-async def health_check():
-    """Health check endpoint"""
-    return {"status": "healthy", "service": "nsw-weather-dashboard"}
-
 @app.get("/dashboard")
 async def dashboard():
     """Dashboard endpoint"""
-    dashboard_path = Path(__file__).parent / "static" / "dashboard.html" 
+    dashboard_path = static_path / "dashboard.html"
     if dashboard_path.exists():
         return FileResponse(str(dashboard_path))
     return {"message": "Dashboard not found", "status": "error"}
 
 @app.get("/visualisation")
 async def weather_visualization():
-    """Weather data visualization page with advanced analytics"""
-    viz_path = Path(__file__).parent / "static" / "weather_dashboard.html"
+    """Weather data visualisation page with advanced analytics"""
+    viz_path = static_path / "weather_dashboard.html"
     if viz_path.exists():
         return FileResponse(str(viz_path))
-    return {"message": "Weather visualization not found", "status": "error"}
+    return {"message": "Weather visualisation not found", "status": "error"}
 
 @app.get("/index")
 async def test_index():
     """Test index endpoint"""
-    index_path = Path(__file__).parent / "static" / "index.html"
+    index_path = static_path / "index.html"
     if index_path.exists():
         return FileResponse(str(index_path))
     return {"message": "Index page not found", "status": "error"}
 
 @app.get("/analysis")
 async def weather_analysis():
-    """Alias for weather visualization page"""
-    viz_path = Path(__file__).parent / "static" / "weather_visualization.html"
+    """Alias for weather visualisation page"""
+    viz_path = static_path / "weather_visualization.html"
     if viz_path.exists():
         return FileResponse(str(viz_path))
     return {"message": "Weather analysis not found", "status": "error"}
+
+@app.get("/health")
+async def health_check():
+    """Health check endpoint"""
+    return {"status": "healthy", "service": "nsw-weather-dashboard"}
 
 if __name__ == "__main__":
     import uvicorn
@@ -124,5 +137,5 @@ if __name__ == "__main__":
         host="0.0.0.0",
         port=8000,
         reload=True,
-        log_level="info"
+        log_level="info",
     )
