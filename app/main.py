@@ -78,8 +78,8 @@ async def summary():
     """
     return {
         "text": (
-            "This dashboard displays a map of NSW weather stations with an optional heat layer. "
-            "Use the accessibility panel to choose a colour-blind-friendly palette, enable high-contrast dark mode, "
+            "This dashboard displays a map of weather stations across Australia. "
+            "Use the accessibility panel to enable high-contrast dark mode, "
             "reduce motion and adjust text size. All controls are keyboard accessible."
         )
     }

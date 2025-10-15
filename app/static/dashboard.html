@@ -10,7 +10,7 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <!-- Leaflet CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
     <!-- Project CSS -->
     <link rel="stylesheet" href="/static/css/dashboard.css">
     <!-- Accessibility CSS -->
@@ -30,36 +30,25 @@
     <main id="main" class="container mt-4" role="main" aria-labelledby="page-heading">
         <h1 id="page-heading" class="visually-hidden">NSW weather data visualisation</h1>
 
-        <!-- Accessibility controls -->
+        <!-- Accessibility controls (palette removed) -->
         <section class="container mb-4" role="region" aria-labelledby="a11y-heading">
             <h2 id="a11y-heading" class="visually-hidden">Accessibility controls</h2>
             <div class="card p-3">
                 <div class="row g-2 align-items-center">
-                    <div class="col-md-3">
-                        <label for="colour-scale" class="form-label">Colour scale</label>
-                        <select id="colour-scale" class="form-select" aria-label="Select colour scale">
-                            <option>Viridis</option>
-                            <option>Cividis</option>
-                            <option>Plasma</option>
-                            <option>Inferno</option>
-                            <option>Magma</option>
-                            <option>Turbo</option>
-                        </select>
-                    </div>
-                    <div class="col-md-3 form-check mt-3">
+                    <div class="col-md-3 form-check mt-1">
                         <input class="form-check-input" type="checkbox" id="dark-contrast" aria-label="Enable high-contrast dark mode">
                         <label class="form-check-label" for="dark-contrast">High-contrast dark</label>
                     </div>
-                    <div class="col-md-3 form-check mt-3">
+                    <div class="col-md-3 form-check mt-1">
                         <input class="form-check-input" type="checkbox" id="reduced-motion" aria-label="Prefer reduced motion" checked>
                         <label class="form-check-label" for="reduced-motion">Reduced motion</label>
                     </div>
-                    <div class="col-md-3 mt-3">
-                        <label for="font-size" class="form-label">Font size</label>
+                    <div class="col-md-3">
+                        <label for="font-size" class="form-label mb-0">Font size</label>
                         <input type="range" id="font-size" class="form-range" min="14" max="24" value="18" aria-label="Adjust font size">
                     </div>
-                    <div class="col-12 d-flex align-items-center gap-2 mt-2">
-                        <button id="speak-summary" class="btn btn-primary" aria-label="Speak the current summary">Speak summary</button>
+                    <div class="col-md-3 d-flex align-items-end">
+                        <button id="speak-summary" class="btn btn-primary me-2" aria-label="Speak the current summary">Speak summary</button>
                         <span id="tts-status" role="status" aria-live="polite" class="small">Audio status: ready</span>
                     </div>
                 </div>
@@ -81,7 +70,7 @@
             </div>
         </div>
 
-        <!-- Search Results Container -->
+        <!-- Search results container -->
         <div id="searchResultsContainer" class="mb-4 search-results-hidden">
             <div class="card">
                 <div class="card-header">
@@ -93,7 +82,7 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <div id="searchResultsContent"><!-- results --></div>
+                    <div id="searchResultsContent"></div>
                 </div>
             </div>
         </div>
@@ -212,17 +201,14 @@
 
     <!-- External scripts -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-    <!-- If you use a heat layer, include the plugin -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+    <!-- Optional: heat plugin if you use it elsewhere -->
     <script src="https://unpkg.com/leaflet.heat/dist/leaflet-heat.js"></script>
 
-    <!-- Accessibility helpers -->
+    <!-- Accessibility helpers (no palettes) -->
     <script src="/static/js/a11y.js?v=1"></script>
 
     <!-- Your existing app logic -->
     <script src="/static/js/dashboard.js?v=1"></script>
-
-    <!-- Palette-aware markers (recolours markers with the selected palette) -->
-    <script src="/static/js/a11y-markers.js?v=1"></script>
 </body>
 </html>
